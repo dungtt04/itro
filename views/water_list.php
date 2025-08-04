@@ -1,6 +1,7 @@
 <?php
 $title = 'Quản lý nước';
 $headContent = '<style>
+    body { font-family: Arial, sans-serif; background: #f6f8fa; }
     .container { max-width: 900px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px #093d6240; padding: 32px 28px; }
     h2 { text-align: center; color: #093d62; }
     .add-btn { display:block; margin:0 auto 18px auto; background:#093d62; color:#fff; border:none; border-radius:6px; padding:10px 28px; font-size:16px; font-weight:500; cursor:pointer; text-decoration:none; width:max-content; }

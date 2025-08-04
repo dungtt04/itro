@@ -113,7 +113,7 @@
       </tr>
       <tr>
         <td style="text-align: left;">
-          Mã giao dịch: <?= htmlspecialchars($h['addinfo']) ?>
+          Mã hóa đơn: <?= htmlspecialchars($h['addinfo']) ?>
         </td>
     </table>
     <!-- Quý khách vui lòng thanh toán hóa đơn
