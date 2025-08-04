@@ -10,4 +10,10 @@ class RoomModel {
         $stmt = $pdo->prepare("INSERT INTO room (room_code, description) VALUES (?, ?)");
         return $stmt->execute([$room_code, $description]);
     }
+    // Cập nhật trạng thái phòng
+    public static function updateStatus($room_code, $status) {
+        global $pdo;
+        $stmt = $pdo->prepare("UPDATE room SET status=? WHERE room_code=?");
+        return $stmt->execute([$status, $room_code]);
+    }
 }

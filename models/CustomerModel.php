@@ -13,6 +13,12 @@ class CustomerModel {
             $data['room'], $data['name'], $data['cccd'], $data['dob'], $data['cccd_date'], $data['cccd_place'], $data['address'], $data['phone'], $data['room_id']
         ]);
     }
+    // Trả phòng: cập nhật trạng thái, không xóa khỏi DB
+    public static function traPhong($id) {
+        global $pdo;
+        $stmt = $pdo->prepare("UPDATE customer SET status='Trả phòng' WHERE id=?");
+        return $stmt->execute([$id]);
+    }
     public static function delete($id) {
         global $pdo;
         $stmt = $pdo->prepare("DELETE FROM customer WHERE id=?");

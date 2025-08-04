@@ -24,6 +24,10 @@ switch ($controller) {
     //     // Route riêng cho module khách hàng (portal, lookup, declare)
     //     require_once __DIR__ . '/controllers/CustomerPortalController.php';
     //     break;
+    case '':
+        // Route cho quản trị khách thuê
+        require_once __DIR__ . '/controllers/DashboardController.php';
+        break;
     case 'customer':
         // Route cho quản trị khách thuê
         require_once __DIR__ . '/controllers/CustomerController.php';

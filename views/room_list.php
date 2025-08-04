@@ -24,13 +24,22 @@ ob_start();
     </form>
     <?php if (!empty($error)): ?><div class="error"><?= $error ?></div><?php endif; ?>
     <table>
-        <tr><th>Mã phòng</th><th>Mô tả</th><th>Ngày tạo</th></tr>
-        <?php foreach($rooms as $r): ?>
         <tr>
-            <td><?= htmlspecialchars($r['room_code']) ?></td>
-            <td><?= htmlspecialchars($r['description']) ?></td>
-            <td><?= htmlspecialchars($r['created_at']) ?></td>
+            <th>Mã phòng</th>
+            <th>Mô tả</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
         </tr>
+        <?php foreach ($rooms as $r): ?>
+            <tr>
+                <td><?= htmlspecialchars($r['room_code']) ?></td>
+                <td><?= htmlspecialchars($r['description']) ?></td>
+                <td><?= htmlspecialchars($r['status']) ?></td>
+                <td>
+                    <a href="index.php?controller=customer&action=action=list&room=<?= urlencode($r['room_code']) ?>" class="action-btn" style="background:#093d62; color:white; text-decoration:none; margin:5px 5px; border-radius: 2px; padding:5px 5px;">Xem khách thuê phòng</a>
+                    <a href="index.php?controller=room&action=electric_water&room=<?= urlencode($r['room_code']) ?>" class="action-btn" style="background:#093d62; color:white; text-decoration:none; margin:5px 5px; border-radius: 2px; padding:5px 5px;">Chỉ số điện nước</a>
+                </td>
+            </tr>
         <?php endforeach; ?>
     </table>
 </div>
