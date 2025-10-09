@@ -88,6 +88,32 @@ switch ($action) {
         if ($id) CustomerModel::delete($id);
         header('Location: index.php?controller=customer&action=list');
         exit;
+    case 'edit':
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            header('Location: index.php?controller=customer&action=list');
+            exit;
+        }
+        require_once __DIR__ . '/../models/CustomerModel.php';
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'name' => $_POST['name'] ?? '',
+                'dob' => $_POST['dob'] ?? '',
+                'cccd' => $_POST['cccd'] ?? '',
+                'cccd_date' => $_POST['cccd_date'] ?? '',
+                'cccd_place' => $_POST['cccd_place'] ?? '',
+                'address' => $_POST['address'] ?? '',
+                'phone' => $_POST['phone'] ?? '',
+                'type_of_tenant' => $_POST['type_of_tenant'] ?? '',
+            ];
+            $customer = CustomerModel::getById($id);
+            CustomerModel::update($id, $data);
+            // Đặt thông báo vào session
+            $_SESSION['success_message'] = 'Cập nhật thông tin khách ' . htmlspecialchars($data['name']) . ' thành công';
+            header('Location: index.php?controller=customer&action=list');
+            exit;
+        }
+        // Nếu GET thì không làm gì (form sửa hiển thị ở customer_list)
     case 'list':
     default:
         $customers = CustomerModel::getAll();

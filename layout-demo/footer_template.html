@@ -1,0 +1,91 @@
+<style>
+.footer {
+  background-color: #ffffff;
+  border-top: 1px solid #eaeaea;
+  padding: 18px 8%;
+  font-family: "Inter", "Segoe UI", sans-serif;
+  color: #444;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-logo {
+  height: 36px;
+  width: auto;
+}
+
+.brand-name {
+  font-weight: 600;
+  color: #222;
+  font-size: 15px;
+}
+
+.footer-right {
+  font-size: 14px;
+  color: #666;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.footer-right a {
+  color: #0077cc;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-right a:hover {
+  color: #005999;
+  text-decoration: underline;
+}
+
+.dot {
+  color: #ccc;
+}
+
+/* 📱 Responsive cho điện thoại */
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .footer-left {
+    justify-content: center;
+  }
+
+  .footer-right {
+    justify-content: center;
+  }
+}
+
+</style>
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-left">
+      <img src="../itro-logo.png" alt="TTD Motel Logo" class="footer-logo">
+      <span class="brand-name">Hệ thống quản lý nhà trọ iTrọ</span>
+    </div>
+
+    <div class="footer-right">
+      <span>© 2025 Tang Tien Dung</span>
+      <span class="dot">•</span>
+      <span>Hỗ trợ: <a href="tel:0343133166">0343.133.166</a></span>
+      <span class="dot">•</span>
+      <span>Email: <a href="mailto:tiendung2004lv@gmail.com">tiendung2004lv@gmail.com</a></span>
+    </div>
+  </div>
+</footer>

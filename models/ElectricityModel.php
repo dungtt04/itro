@@ -34,7 +34,7 @@ class ElectricityModel
     {
         global $pdo;
         // month phải là dạng YYYY-MM
-        $stmt = $pdo->prepare("INSERT INTO electricity (month, room_id, object_name, CSC, CSM, DTT, total) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO electricity (month, room_id, object_name, CSC, CSM, DTT, unit_price, total) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         return $stmt->execute([
             $data['month'],
             $data['room_id'],
@@ -42,6 +42,7 @@ class ElectricityModel
             $data['CSC'],
             $data['CSM'],
             $data['DTT'],
+            $data['unit_price'],
             $data['total']
         ]);
     }

@@ -53,4 +53,38 @@ class CustomerModel {
         }
         return $row;
     }
+    public static function update($id, $data) {
+                global $pdo;
+        // $stmt = $pdo->prepare("UPDATE customer SET name=?, dob=?, cccd=?, cccd_date=?, cccd_place=?, address=?, phone=? WHERE id=?");
+
+        $stmt = $pdo->prepare("UPDATE customer SET name=?, dob=?, cccd=?, cccd_date=?, cccd_place=?, address=?, phone=?, type_of_tenant=? WHERE id=?");
+        $stmt->execute([
+            $data['name'],
+            $data['dob'],
+            $data['cccd'],
+            $data['cccd_date'],
+            $data['cccd_place'],
+            $data['address'],
+            $data['phone'],
+            $data['type_of_tenant'],
+            $id
+        ]);
+    }
+    public static function getByRoom($room_code) {
+        // Giả sử dùng PDO
+        $db = static::getDB();
+        $stmt = $db->prepare("SELECT * FROM customer WHERE room = :room_code");
+        $stmt->execute(['room_code' => $room_code]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public static function getDB() {
+        // Ví dụ dùng biến toàn cục $db hoặc tự tạo kết nối mới
+        // Sửa lại cho phù hợp với project của bạn nếu đã có hàm kết nối
+        static $db = null;
+        if ($db === null) {
+            $db = new PDO('mysql:host=localhost;dbname=generateqr;charset=utf8', 'root', '');
+            $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }
+        return $db;
+    }
 }

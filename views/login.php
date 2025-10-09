@@ -10,6 +10,7 @@ $headContent = '<style>
 </style>';
 ob_start();
 ?>
+
 <div class="login-box">
     <h2>Đăng nhập quản trị</h2>
     <?php if (!empty($error)): ?><div class="error"><?= $error ?></div><?php endif; ?>

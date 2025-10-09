@@ -24,6 +24,52 @@ require_once __DIR__ . '/../models/RoomModel.php';
 ob_start();
 ?>
 <div class="container">
+        <?php if (!empty($_SESSION['success_message'])): ?>
+        <div id="success-toast" style="position:fixed;top:32px;right:32px;z-index:9999;background:#1e7e34;color:#fff;padding:14px 28px;border-radius:8px;box-shadow:0 2px 12px #093d6240;font-size:16px;animation:fadeIn 0.5s;">
+            <?= $_SESSION['success_message'];
+            unset($_SESSION['success_message']); ?>
+        </div>
+        <script>
+            setTimeout(function() {
+                var toast = document.getElementById('success-toast');
+                if (toast) toast.style.display = 'none';
+            }, 3500);
+        </script>
+        <style>
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+
+                to {
+                    opacity: 1;
+                }
+            }
+        </style>
+    <?php endif; ?>
+    <?php if (!empty($_SESSION['error_message'])): ?>
+        <div id="error-toast" style="position:fixed;top:32px;right:32px;z-index:9999;background:red;color:#fff;padding:14px 28px;border-radius:8px;box-shadow:0 2px 12px #093d6240;font-size:16px;animation:fadeIn 0.5s;">
+            <?= $_SESSION['error_message'];
+            unset($_SESSION['error_message']); ?>
+        </div>
+        <script>
+            setTimeout(function() {
+                var toast = document.getElementById('error-toast');
+                if (toast) toast.style.display = 'none';
+            }, 3500);
+        </script>
+        <style>
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+
+                to {
+                    opacity: 1;
+                }
+            }
+        </style>
+    <?php endif; ?>
     <h2>Hóa đơn</h2>
     <a href="index.php?controller=qr" class="create-btn">Tạo hóa đơn</a>
         <!-- <form method="get" class="filter-form">
@@ -72,7 +118,7 @@ ob_start();
                                 <td><?= isset($h['CSC']) && $h['CSC'] !== null ? htmlspecialchars($h['CSC']) : '' ?></td>
                                 <td><?= isset($h['CSM']) && $h['CSM'] !== null ? htmlspecialchars($h['CSM']) : '' ?></td>
                                 <td><?= isset($h['DTT']) && $h['DTT'] !== null ? htmlspecialchars($h['DTT']) : '' ?></td>
-                                <td>3.000đ</td>
+                                <td><?= isset($h['unit_price']) &&$h['unit_price']!== null ? htmlspecialchars($h['unit_price']) : ''?></td>
                                 <td><?= number_format($h['tien_dien']) ?>đ</td>
                             </tr>
                         </table>
@@ -107,7 +153,8 @@ ob_start();
                     <b>Cần thanh toán:</b> <?= isset($h['total_discount']) ? number_format($h['total_discount']) : number_format($h['tong_tien']) ?>đ<br>
                     <div style="margin-top:10px; text-align:right;">
                         <?php if($h['status'] !== 'Đã thanh toán'): ?>
-                        <a href="index.php?controller=invoice&action=mark_paid&id=<?= $h['id'] ?>" class="action-btn">Thanh toán</a>
+                        
+                        <a href="index.php?controller=invoice&action=mark_paid&id=<?= $h['id'] ?>" onclick="return confirm('Bạn chắc chắn muốn thanh toán hóa đơn này?');"  class="action-btn">Thanh toán</a>
                         <?php endif; ?>
                         <a href="index.php?controller=invoice&action=invoice&id=<?= $h['id'] ?>" class="action-btn print" target="_blank">In hóa đơn</a>
                     </div>

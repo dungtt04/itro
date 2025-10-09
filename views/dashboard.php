@@ -1,5 +1,5 @@
 <?php
-$title = 'iTrọ - Dashboard';
+$title = 'Hệ thống quản lý nhà trọ iTrọ';
 $headContent = '<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
     body { font-family: Arial, sans-serif; background: #f6f8fa; }
@@ -59,7 +59,11 @@ ob_start();
         </div>
       </div>
       <div class="dashboard-right">
-        <h3>Khách thuê mới (7 ngày gần nhất)</h3>
+        <!-- Viết CSS cho class title này thẻ h3 căn trái, a căn phải -->
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <h3 style="text-align:left;">Khách thuê mới (7 ngày gần nhất)</h3>
+          <a style="text-align:right;text-decoration:none;" href="/index.php?controller=customer">Xem tất cả</a>
+        </div>
         <table>
             <tr>
                 <th>Tên</th><th>Phòng</th><th>Ngày tạo</th><th>Điện thoại</th>
@@ -74,30 +78,62 @@ ob_start();
             <?php endforeach; ?>
             <?php if (empty($newCustomers)): ?><tr><td colspan="4" style="text-align:center;">Không có khách mới</td></tr><?php endif; ?>
         </table>
-        <h3>Hóa đơn chưa thanh toán</h3>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <h3 style="text-align:left;">Hóa đơn chứa thanh toán</h3>
+          <a style="text-align:right;text-decoration:none;" href="/index.php?controller=invoice">Xem tất cả</a>
+        </div>
         <table style="width:100%;border-collapse:collapse;">
             <tr style="background:#e3eafc;color:#093d62;">
-                <th>Phòng</th><th>Tháng/Năm</th><th>Số tiền</th><th>Ngày tạo</th><th>Thao tác</th>
+                <th>Phòng</th><th>Tháng/Năm</th><th>Thao tác</th>
             </tr>
             <?php foreach($unpaidInvoices as $h): ?>
             <tr>
                 <td><?= htmlspecialchars($h['room']) ?></td>
                 <td><?= htmlspecialchars($h['mmyy']) ?></td>
-                <td><?= number_format($h['amount']) ?></td>
-                <td><?= htmlspecialchars($h['created_at']) ?></td>
+                <!-- <td><?= number_format($h['amount']) ?></td>
+                <td><?= htmlspecialchars($h['created_at']) ?></td> -->
                 <td>
-                    <a href="index.php?controller=history&action=mark_paid&id=<?= $h['id'] ?>" onclick="return confirm('Xác nhận thanh toán hóa đơn này?');" style="background:#1e7e34;color:#fff;padding:6px 16px;border-radius:6px;text-decoration:none;font-weight:500;">Thanh toán</a>
+                    <a href="index.php?controller=invoice&action=mark_paid&id=<?= $h['id'] ?>" onclick="return confirm('Xác nhận thanh toán hóa đơn này?');" style="background:#1e7e34;color:#fff;padding:6px 16px;border-radius:6px;text-decoration:none;font-weight:500;">Thanh toán</a>
                 </td>
             </tr>
             <?php endforeach; ?>
             <?php if (empty($unpaidInvoices)): ?><tr><td colspan="5" style="text-align:center;">Không có hóa đơn chưa thanh toán</td></tr><?php endif; ?>
         </table>
+        <!-- Thêm mục hiển thị số phòng trống (đếm số phòng có trạng thái 'Còn trống') -->
+        <?php
+        // Giả sử biến $rooms chứa danh sách các phòng, mỗi phòng là 1 mảng có key 'status'
+        $emptyRooms = 0;
+        if (!empty($rooms) && is_array($rooms)) {
+            foreach ($rooms as $room) {
+          if (isset($room['status']) && $room['status'] === 'Còn trống') {
+              $emptyRooms++;
+          }
+            }
+        }
+        ?>
+        <div style="margin: 18px 0; padding: 14px; background: #e3eafc; border-radius: 8px; color: #093d62; font-weight: 500;">
+            Số phòng còn trống: <b><?= $emptyRooms ?></b>
+        </div>
+      <?php
+      // Giả sử biến $customers chứa danh sách khách thuê, mỗi khách là 1 mảng có key 'status'
+      $activeCustomers = 0;
+      if (!empty($customers) && is_array($customers)) {
+        foreach ($customers as $cus) {
+          if (isset($cus['status']) && $cus['status'] === 'Đang thuê') {
+            $activeCustomers++;
+          }
+        }
+      }
+      ?>
+      <div style="margin: 18px 0; padding: 14px; background: #e3eafc; border-radius: 8px; color: #093d62; font-weight: 500;">
+        Số khách đang thuê: <b><?= $activeCustomers ?></b>
+      </div>
       </div>
     </div>
-    <hr/>
-    <hr/>
+    <!-- <hr/>
+    <hr/> -->
 
-    <div class="dashboard-stats-flex" style="display:flex;gap:32px;margin-bottom:32px;flex-wrap:wrap;">
+    <!-- <div class="dashboard-stats-flex" style="display:flex;gap:32px;margin-bottom:32px;flex-wrap:wrap;">
       <div style="flex:1;min-width:320px;">
         <form method="get" style="margin-bottom:10px;">
           <input type="hidden" name="controller" value="dashboard">
@@ -145,7 +181,7 @@ ob_start();
           <tr><th>Lợi nhuận sau trừ</th><td><b><?= number_format($loiNhuanNam) ?> đ</b></td></tr>
         </table>
       </div>
-    </div>
+    </div> -->
 </div>
 <script>
 const labels = <?= json_encode($labels) ?>;

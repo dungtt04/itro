@@ -27,7 +27,7 @@ ob_start();
         <label for="room">Lọc theo phòng:</label>
         <select name="room" id="room" onchange="this.form.submit()">
             <option value="">Tất cả</option>
-            <?php foreach($roomList as $r): ?>
+            <?php foreach ($roomList as $r): ?>
                 <option value="<?= htmlspecialchars($r['room_code']) ?>" <?= $selectedRoom == $r['room_code'] ? 'selected' : '' ?>><?= htmlspecialchars($r['room_code']) ?></option>
             <?php endforeach; ?>
         </select>
@@ -35,24 +35,31 @@ ob_start();
     <a href="index.php?controller=water&action=add" class="add-btn">Thêm chỉ số nước</a>
     <table>
         <tr>
-            <th>ID</th><th>Tháng</th><th>Phòng</th><th>CSC</th><th>CSM</th><th>DTT</th><th>Thành tiền</th><th>Hành động</th>
+            <th>ID</th>
+            <th>Tháng</th>
+            <th>Phòng</th>
+            <th>CSC</th>
+            <th>CSM</th>
+            <th>TT</th>
+            <!-- <th>Thành tiền</th> -->
+            <th>Hành động</th>
         </tr>
-        <?php foreach($list as $w): ?>
-        <?php if (!$selectedRoom || $w['room_code'] == $selectedRoom): ?>
-        <tr>
-            <td><?= $w['id'] ?></td>
-            <td><?= htmlspecialchars($w['month']) ?></td>
-            <td><?= htmlspecialchars($w['room_code']) ?></td>
-            <td><?= $w['CSC'] ?></td>
-            <td><?= $w['CSM'] ?></td>
-            <td><?= $w['DTT'] ?></td>
-            <td><?= number_format($w['total']) ?></td>
-            <td>
-                <a href="index.php?controller=water&action=edit&id=<?= $w['id'] ?>" class="action-btn">Sửa</a>
-                <a href="index.php?controller=water&action=delete&id=<?= $w['id'] ?>" class="action-btn delete" onclick="return confirm('Xóa bản ghi này?');">Xóa</a>
-            </td>
-        </tr>
-        <?php endif; ?>
+        <?php foreach ($list as $w): ?>
+            <?php if (!$selectedRoom || $w['room_code'] == $selectedRoom): ?>
+                <tr>
+                    <td><?= $w['id'] ?></td>
+                    <td><?= htmlspecialchars($w['month']) ?></td>
+                    <td><?= htmlspecialchars($w['room_code']) ?></td>
+                    <td><?= $w['CSC'] ?></td>
+                    <td><?= $w['CSM'] ?></td>
+                    <td><?= $w['DTT'] ?></td>
+                    <!-- <td><?= number_format($w['total']) ?></td> -->
+                    <td>
+                        <a href="index.php?controller=water&action=edit&id=<?= $w['id'] ?>" class="action-btn">Sửa</a>
+                        <a href="index.php?controller=water&action=delete&id=<?= $w['id'] ?>" class="action-btn delete" onclick="return confirm('Xóa bản ghi này?');">Xóa</a>
+                    </td>
+                </tr>
+            <?php endif; ?>
         <?php endforeach; ?>
     </table>
 </div>

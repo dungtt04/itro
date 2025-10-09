@@ -36,12 +36,12 @@ ob_start();
         <?php foreach($customers as $c): ?>
             <?php if (isset($c['status']) && $c['status'] === 'Trả phòng'): ?>
             <tr>
-                <td><?= htmlspecialchars($c['room_code']) ?></td>
+                <td><?= htmlspecialchars($c['room']) ?></td>
                 <td><?= htmlspecialchars($c['name']) ?></td>
                 <td><?= htmlspecialchars($c['cccd']) ?></td>
                 <td><?= htmlspecialchars($c['dob']) ?></td>
-                <td><?= htmlspecialchars($c['issue_date']) ?></td>
-                <td><?= htmlspecialchars($c['issue_place']) ?></td>
+                <td><?= htmlspecialchars($c['cccd_date']) ?></td>
+                <td><?= htmlspecialchars($c['cccd_place']) ?></td>
                 <td><?= htmlspecialchars($c['address']) ?></td>
                 <td><?= htmlspecialchars($c['phone']) ?></td>
                 <td>

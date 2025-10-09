@@ -11,8 +11,19 @@ switch ($action) {
     case 'mark_paid':
         $id = (int)($_GET['id'] ?? 0);
         if ($id) HistoryModel::markPaid($id);
-        header('Location: index.php?controller=invoice&action=list');
-        exit;
+        $_SESSION['success_message'] = 'Thanh toán hóa đơn thành công!!';
+        //Thêm check nếu thanh toán ở trang dashboard thì quay về dashboard
+        if(isset($_GET['from']) && $_GET['from'] === 'dashboard') {
+            header('Location: index.php?controller=dashboard');
+            exit;
+        }
+        else{
+            header('Location: index.php?controller=invoice&action=list');
+            exit;
+        }
+
+        // header('Location: index.php?controller=invoice&action=list');
+        // exit;
     case 'delete':
         $id = (int)($_GET['id'] ?? 0);
         if ($id) HistoryModel::delete($id);
@@ -33,7 +44,7 @@ switch ($action) {
             $stmt->execute([$id]);
             $h = $stmt->fetch();
             // Đảm bảo các trường luôn tồn tại
-            foreach(['CSC','CSM','DTT','CSC_NUOC','CSM_NUOC','DTT_NUOC','tien_dien','tien_nuoc'] as $k) {
+            foreach (['CSC', 'CSM', 'DTT', 'CSC_NUOC', 'CSM_NUOC', 'DTT_NUOC', 'tien_dien', 'tien_nuoc'] as $k) {
                 if (!isset($h[$k]) || $h[$k] === null) $h[$k] = '';
             }
         }
