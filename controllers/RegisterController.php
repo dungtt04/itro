@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($result === 'exists') {
             $error = 'Tên đăng nhập đã tồn tại!';
         } elseif ($result === true) {
-            $success = 'Tạo tài khoản admin thành công!';
+            $success = 'Tạo tài khoản thành công, vui lòng chờ duyệt trong 2 -3 ngày!';
         } else {
             $error = 'Có lỗi xảy ra, vui lòng thử lại!';
         }

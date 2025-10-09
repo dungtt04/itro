@@ -59,6 +59,23 @@ switch ($controller) {
     case 'report':
         require_once __DIR__ . '/controllers/ReportController.php';
         break;
+    case 'admin':
+        require_once __DIR__ . '/controllers/AdminController.php';
+        break; 
+    case 'account':
+        require_once __DIR__ . '/controllers/AccountController.php';
+        // $accountController = new AccountController();
+        // if ($action == 'index') {
+        //     $accountController->index();
+        // }
+        break;
+        //Giải thích case 'account':  
+        // require_once __DIR__ . '/controllers/AccountController.php';
+        // $accountController = new AccountController(); // Tạo một instance của AccountController
+        // if ($action == 'index') { // Kiểm tra nếu action là 'index'
+        //     $accountController->index(); // Gọi phương thức index() của AccountController
+        // }  
+
     
     default:
         // Mặc định route về dashboard

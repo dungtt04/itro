@@ -1,6 +1,7 @@
 <?php
 $title = 'Khai báo khách mới';
 $headContent = '<style>
+    body { font-family: Arial, sans-serif; background: #f0f4f8; color: #333; }
     .container { max-width: 500px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px #093d6240; padding: 32px 28px; }
     h2 { text-align: center; color: #093d62; }
     label { display: block; margin-top: 12px; font-weight: 500; color: #093d62; }

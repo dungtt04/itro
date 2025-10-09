@@ -13,7 +13,26 @@ $headContent = '<style>
     .add-form input, .add-form textarea { padding: 7px; border-radius: 5px; border: 1px solid #bfc7d1; margin-right: 8px; }
     .add-form button { background: #093d62; color: #fff; border: none; border-radius: 6px; padding: 7px 18px; font-weight: 500; }
     .error { color: #d93025; background: #fff0f0; border: 1.5px solid #f8d7da; border-radius: 6px; padding: 10px; margin-bottom: 10px; text-align: center; }
-
+    // .print-tamtru-btn {
+    //     display: inline-block;
+    //     background: #093D62;
+    //     color: #fff;
+    //     padding: 8px 18px;
+    //     border-radius: 6px;
+    //     text-decoration: none;
+    //     font-weight: 500;
+    //     margin-bottom: 18px;
+    //     margin-left: 6px;
+    //     border: none;
+    //     cursor: pointer;
+    //     transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    //     box-shadow: 0 2px 8px #093d6240;
+    // }
+    // .print-tamtru-btn:hover, .print-tamtru-btn:focus {
+    //     background: #0056b3;
+    //     color: #fff;
+    //     box-shadow: 0 4px 16px #093d6240;
+    // }
     /* Responsive cho mobile */
     @media (max-width: 700px) {
         .container {
@@ -77,6 +96,8 @@ $headContent = '<style>
             margin: 6px 0;
             text-align: center;
         }
+
+
         /* Sửa thao tác thành mỗi nút 1 hàng */
         td[data-label="Thao tác"] > div {
             flex-direction: column !important;
@@ -114,8 +135,9 @@ ob_start();
                     <td data-label="Trạng thái"><?= htmlspecialchars($r['status']) ?></td>
                     <td data-label="Thao tác">
                         <div style="display: flex; flex-direction: row; gap: 8px;">
-                            <a href="index.php?controller=customer&action=list&room=<?= urlencode($r['room_code']) ?>" class="action-btn" style="background:#093d62; color:white; text-decoration:none; border-radius: 2px; padding:5px 5px;">Xem khách thuê phòng</a>
-                            <a href="index.php?controller=room&action=electric_water&room=<?= urlencode($r['room_code']) ?>" class="action-btn" style="background:#093d62; color:white; text-decoration:none; border-radius: 2px; padding:5px 5px;">Chỉ số điện nước</a>
+                            <a href="index.php?controller=customer&action=list&room=<?= urlencode($r['room_code']) ?>" class="action-btn" style="background:#093d62; color:white; text-decoration:none; border-radius: 2px; padding:5px 5px;">Khách thuê</a>
+                            <a href="index.php?controller=room&action=electric_water&room=<?= urlencode($r['room_code']) ?>" class="action-btn" style="background:#093d62; color:white; text-decoration:none; border-radius: 2px; padding:5px 5px;">Điện nước</a>
+                            <!-- <a href="index.php?controller=room&action=print_tam_tru&room_code=<?= urlencode($r['room_code']) ?>" class="action-btn" style="background:#093d62; color:white; text-decoration:none; border-radius: 2px; padding:5px 5px;">In tờ khai CT01</a> -->
                         </div>
                     </td>
                 </tr>

@@ -28,7 +28,9 @@ switch ($action) {
             $CSM = (int)$_POST['CSM'];
             $CSC = $_POST['CSC'] === '' ? null : (int)$_POST['CSC'];
             $DTT = $CSM - (int)$CSC;
-            $total = $DTT * 3000;
+            $unit_price = (int)$_POST['unit_price'] ?: 3000; // Mặc định 3000 nếu không có
+
+            $total = $DTT * $unit_price;
             if ($room_id && $month_db && $CSM) {
                 ElectricityModel::add([
                     'month' => $month_db,
@@ -37,6 +39,7 @@ switch ($action) {
                     'CSC' => $CSC,
                     'CSM' => $CSM,
                     'DTT' => $DTT,
+                    'unit_price' => $unit_price,
                     'total' => $total
                 ]);
                 $msg = 'Đã thêm chỉ số điện!';
