@@ -13,11 +13,10 @@ switch ($action) {
         if ($id) HistoryModel::markPaid($id);
         $_SESSION['success_message'] = 'Thanh toán hóa đơn thành công!!';
         //Thêm check nếu thanh toán ở trang dashboard thì quay về dashboard
-        if(isset($_GET['from']) && $_GET['from'] === 'dashboard') {
+        if (isset($_GET['from']) && $_GET['from'] === 'dashboard') {
             header('Location: index.php?controller=dashboard');
             exit;
-        }
-        else{
+        } else {
             header('Location: index.php?controller=invoice&action=list');
             exit;
         }
@@ -41,6 +40,14 @@ switch ($action) {
                 LEFT JOIN electricity e ON h.electricity_id = e.id
                 LEFT JOIN water w ON h.water_id = w.id
                 WHERE h.id=?');
+            // giải thích câu lệnh SQL trên: Lấy tất cả các trường từ bảng 
+            // nhatro_history (đặt bí danh là h), cùng với các trường CSC, CSM, 
+            // DTT từ bảng electricity (đặt bí danh là e) và các trường CSC_NUOC,
+            // CSM_NUOC, DTT_NUOC từ bảng water (đặt bí danh là w). Việc sử dụng 
+            // LEFT JOIN đảm bảo rằng ngay cả khi không có bản ghi tương ứng trong 
+            // bảng electricity hoặc water, các bản ghi từ bảng nhatro_history vẫn 
+            // sẽ được bao gồm trong kết quả. Điều này rất hữu ích để hiển thị đầy đủ 
+            // thông tin hóa đơn ngay cả khi không có dữ liệu điện hoặc nước cho một tháng cụ thể.
             $stmt->execute([$id]);
             $h = $stmt->fetch();
             // Đảm bảo các trường luôn tồn tại

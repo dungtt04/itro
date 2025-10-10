@@ -139,7 +139,9 @@ ob_start();
                                 <td><?= isset($h['CSC_NUOC']) ? htmlspecialchars($h['CSC_NUOC']) : '' ?></td>
                                 <td><?= isset($h['CSM_NUOC']) ? htmlspecialchars($h['CSM_NUOC']) : '' ?></td>
                                 <td><?= isset($h['DTT_NUOC']) ? htmlspecialchars($h['DTT_NUOC']) : '' ?></td>
-                                <td>15.000đ</td>
+                                <td>
+                                    <?= isset($h['unit_price_nuoc']) && $h['unit_price_nuoc'] !== null ? htmlspecialchars($h['unit_price_nuoc']) : '' ?>
+                                </td>
                                 <td><?= number_format($h['tien_nuoc']) ?>đ</td>
                             </tr>
                         </table>
