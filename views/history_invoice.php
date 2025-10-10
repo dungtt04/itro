@@ -57,7 +57,9 @@
         <td><?= isset($h['CSC']) && $h['CSC'] !== null ? htmlspecialchars($h['CSC']) : '' ?></td>
         <td><?= isset($h['CSM']) && $h['CSM'] !== null ? htmlspecialchars($h['CSM']) : '' ?></td>
         <td><?= isset($h['DTT']) && $h['DTT'] !== null ? htmlspecialchars($h['DTT']) : '' ?></td>
-        <td>3.000</td>
+        <td>
+          <?= isset($h['unit_price']) && $h['unit_price'] !== null ? number_format($h['unit_price']) : '3000' ?>
+        </td>
         <td><?= isset($h['tien_dien']) && $h['tien_dien'] !== null ? number_format($h['tien_dien']) : '' ?></td>
       </tr>
       <tr>
@@ -65,7 +67,9 @@
         <td><?= isset($h['CSC_NUOC']) && $h['CSC_NUOC'] !== null ? htmlspecialchars($h['CSC_NUOC']) : '' ?></td>
         <td><?= isset($h['CSM_NUOC']) && $h['CSM_NUOC'] !== null ? htmlspecialchars($h['CSM_NUOC']) : '' ?></td>
         <td><?= isset($h['DTT_NUOC']) && $h['DTT_NUOC'] !== null ? htmlspecialchars($h['DTT_NUOC']) : '' ?></td>
-        <td>15.000</td>
+        <td>
+          <?= isset($h['unit_price_nuoc']) && $h['unit_price_nuoc'] !== null ? number_format($h['unit_price_nuoc']) : '15000' ?>
+        </td>
         <td><?= isset($h['tien_nuoc']) && $h['tien_nuoc'] !== null ? number_format($h['tien_nuoc']) : '' ?></td>
       </tr>
       <tr>

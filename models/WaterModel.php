@@ -27,9 +27,9 @@ class WaterModel {
     }
     public static function add($data) {
         global $pdo;        // month phải là dạng YYYY-MM
-        $stmt = $pdo->prepare("INSERT INTO water (month, room_id, object_name, CSC, CSM, DTT, total) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO water (month, room_id, object_name, CSC, CSM, DTT, unit_price, total) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         return $stmt->execute([
-            $data['month'], $data['room_id'], $data['object_name'], $data['CSC'], $data['CSM'], $data['DTT'], $data['total']
+            $data['month'], $data['room_id'], $data['object_name'], $data['CSC'], $data['CSM'], $data['DTT'], $data['unit_price'], $data['total']
         ]);
     }
     public static function update($id, $data) {
