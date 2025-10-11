@@ -61,9 +61,23 @@ switch ($action) {
             echo 'Không tìm thấy hóa đơn!';
         }
         break;
-    case 'list':
-    default:
-        $history = HistoryModel::getAll();
-        include __DIR__ . '/../views/history_list.php';
-        break;
+case 'list':
+default:
+    require_once __DIR__ . '/../models/RoomModel.php';
+    $roomList = RoomModel::getAll();
+
+    // Lấy giá trị lọc từ GET
+    $room = $_GET['room'] ?? '';
+    $month = $_GET['month'] ?? '';
+    $status = $_GET['status'] ?? '';
+
+    // Lấy danh sách hóa đơn có lọc
+    $history = HistoryModel::filter($room, $month, $status);
+
+    include __DIR__ . '/../views/history_list.php';
+    break;
+    // default:
+    //     $history = HistoryModel::getAll();
+    //     include __DIR__ . '/../views/history_list.php';
+    //     break;
 }

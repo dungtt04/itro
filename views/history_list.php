@@ -82,6 +82,38 @@ ob_start();
             <?php endforeach; ?>
         </select>
     </form> -->
+    <form method="get" style="margin-bottom: 20px; text-align: center;">
+    <input type="hidden" name="controller" value="invoice">
+    <input type="hidden" name="action" value="list">
+
+    <label for="room">Phòng:</label>
+    <select name="room" id="room" style="padding:6px 10px;">
+        <option value="">Tất cả</option>
+        <?php foreach($roomList as $r): ?>
+            <option value="<?= htmlspecialchars($r['room_code']) ?>" <?= ($room == $r['room_code']) ? 'selected' : '' ?>>
+                <?= htmlspecialchars($r['room_code']) ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+
+    <!-- <label for="month">Tháng:</label>
+    <select name="month" id="month" style="padding:6px 10px;">
+        <option value="">Tất cả</option>
+        <?php for($m=1;$m<=12;$m++): ?>
+            <option value="<?= $m ?>" <?= ($month == $m) ? 'selected' : '' ?>><?= $m ?></option>
+        <?php endfor; ?>
+    </select> -->
+
+    <label for="status">Trạng thái:</label>
+    <select name="status" id="status" style="padding:6px 10px;">
+        <option value="">Tất cả</option>
+        <option value="Đã thanh toán" <?= ($status == 'Đã thanh toán') ? 'selected' : '' ?>>Đã thanh toán</option>
+        <option value="Chưa thanh toán" <?= ($status == 'Chưa thanh toán') ? 'selected' : '' ?>>Chưa thanh toán</option>
+    </select>
+
+    <button type="submit" class="action-btn" style="margin-left:10px;">Lọc</button>
+</form>
+
     <table>
         <thead>
         <tr>
