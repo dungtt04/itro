@@ -2,10 +2,18 @@
 // models/CustomerModel.php
 require_once __DIR__ . '/../db.php';
 class CustomerModel {
-    public static function getAll() {
-        global $pdo;
-        return $pdo->query("SELECT * FROM customer ORDER BY room, name")->fetchAll();
-    }
+public static function getAll($sort = 'room', $order = 'ASC') {
+    global $pdo;
+    $allowedSort = ['room', 'name'];
+    $allowedOrder = ['ASC', 'DESC'];
+
+    // Đảm bảo không có SQL injection
+    if (!in_array($sort, $allowedSort)) $sort = 'room';
+    if (!in_array(strtoupper($order), $allowedOrder)) $order = 'ASC';
+
+    $sql = "SELECT * FROM customer ORDER BY $sort $order";
+    return $pdo->query($sql)->fetchAll();
+}
     public static function add($data) {
         global $pdo;
         $stmt = $pdo->prepare("INSERT INTO customer (room, name, cccd, dob, cccd_date, cccd_place, address, phone, room_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");

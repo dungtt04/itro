@@ -61,6 +61,17 @@ switch ($action) {
             echo 'Không tìm thấy hóa đơn!';
         }
         break;
+    case 'mark_paid_bulk':
+    if (!empty($_POST['selected_ids'])) {
+        $ids = array_map('intval', $_POST['selected_ids']);
+        HistoryModel::markPaidMultiple($ids);
+        $_SESSION['success_message'] = 'Đã thanh toán ' . count($ids) . ' hóa đơn thành công!';
+    } else {
+        $_SESSION['error_message'] = 'Vui lòng chọn ít nhất một hóa đơn!';
+    }
+    header('Location: index.php?controller=invoice&action=list');
+    exit;
+
 case 'list':
 default:
     require_once __DIR__ . '/../models/RoomModel.php';

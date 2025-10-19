@@ -114,90 +114,98 @@ ob_start();
     <button type="submit" class="action-btn" style="margin-left:10px;">Lọc</button>
 </form>
 
-    <table>
-        <thead>
-        <tr>
-            <th>Tháng/Năm</th>
-            <th>Phòng</th>
-            <th>Số tiền</th>
-            <th>Trạng thái</th>
-            <th>Thao tác</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php foreach($history as $h): ?>
-        <tr class="main-row">
-            <td><?= htmlspecialchars($h['mmyy']) ?></td>
-            <td><?= htmlspecialchars($h['room']) ?></td>
-            <td><?= number_format($h['tong_tien']) ?></td>
-            <td><?= htmlspecialchars($h['status']) ?></td>
-            <td><button class="action-btn" onclick="toggleDetail(this)">Xem chi tiết</button></td>
-        </tr>
-        <tr class="detail-row" style="display:none;">
-            <td colspan="5">
-                <div style="padding:10px 0 0 0;">
-                    <b>Điện:</b><br>
-                    <?php if(isset($h['tien_dien']) && $h['tien_dien'] !== null): ?>
-                        <table>
-                            <tr>
-                                <th>CSC</th>
-                                <th>CSM</th>
-                                <th>SĐTT</th>
-                                <th>Đơn giá</th>
-                                <th>Thành tiền</th>
-                            </tr>
-                            <tr>
-                                <td><?= isset($h['CSC']) && $h['CSC'] !== null ? htmlspecialchars($h['CSC']) : '' ?></td>
-                                <td><?= isset($h['CSM']) && $h['CSM'] !== null ? htmlspecialchars($h['CSM']) : '' ?></td>
-                                <td><?= isset($h['DTT']) && $h['DTT'] !== null ? htmlspecialchars($h['DTT']) : '' ?></td>
-                                <td><?= isset($h['unit_price']) &&$h['unit_price']!== null ? htmlspecialchars($h['unit_price']) : ''?></td>
-                                <td><?= number_format($h['tien_dien']) ?>đ</td>
-                            </tr>
-                        </table>
-                    <?php else: ?>
-                        Không có dữ liệu điện<br>
-                    <?php endif; ?>
-                    <b>Nước:</b><br>
-                    <?php if(isset($h['tien_nuoc']) && $h['tien_nuoc'] !== null): ?>
-                        <table>
-                            <tr>
-                                <th>CSC</th>
-                                <th>CSM</th>
-                                <th>SĐTT</th>
-                                <th>Đơn giá</th>
-                                <th>Thành tiền</th>
-                            </tr>
-                            <tr>
-                                <td><?= isset($h['CSC_NUOC']) ? htmlspecialchars($h['CSC_NUOC']) : '' ?></td>
-                                <td><?= isset($h['CSM_NUOC']) ? htmlspecialchars($h['CSM_NUOC']) : '' ?></td>
-                                <td><?= isset($h['DTT_NUOC']) ? htmlspecialchars($h['DTT_NUOC']) : '' ?></td>
-                                <td>
-                                    <?= isset($h['unit_price_nuoc']) && $h['unit_price_nuoc'] !== null ? htmlspecialchars($h['unit_price_nuoc']) : '' ?>
-                                </td>
-                                <td><?= number_format($h['tien_nuoc']) ?>đ</td>
-                            </tr>
-                        </table>
-                    <?php else: ?>
-                        Không có dữ liệu nước<br>
-                    <?php endif; ?>
-                    <b>Phí dịch vụ:</b> <?= number_format(($h['so_nguoi'] == 2) ? 50000 : ($h['so_nguoi'] * 30000)) ?>đ<br>
-                    <b>Tiền phòng:</b> <?= number_format($h['tien_phong']) ?>đ<br>
-                    <b>Tổng hóa đơn:</b> <?= number_format($h['tong_tien']) ?>đ<br>
-                    <b>Giảm giá:</b> <?= isset($h['discount']) ? number_format($h['discount']) : '0' ?>đ<br>
-                    <b>Cần thanh toán:</b> <?= isset($h['total_discount']) ? number_format($h['total_discount']) : number_format($h['tong_tien']) ?>đ<br>
-                    <div style="margin-top:10px; text-align:right;">
-                        <?php if($h['status'] !== 'Đã thanh toán'): ?>
-                        
-                        <a href="index.php?controller=invoice&action=mark_paid&id=<?= $h['id'] ?>" onclick="return confirm('Bạn chắc chắn muốn thanh toán hóa đơn này?');"  class="action-btn">Thanh toán</a>
-                        <?php endif; ?>
-                        <a href="index.php?controller=invoice&action=invoice&id=<?= $h['id'] ?>" class="action-btn print" target="_blank">In hóa đơn</a>
-                    </div>
-                </div>
-            </td>
-        </tr>
-        <?php endforeach; ?>
-        </tbody>
-    </table>
+    <form method="post" action="index.php?controller=invoice&action=mark_paid_bulk" id="bulkForm">
+        <table>
+            <thead>
+                <tr>
+                    <th><input type="checkbox" id="checkAll"></th>
+                    <th>Tháng/Năm</th>
+                    <th>Phòng</th>
+                    <th>Số tiền</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($history as $h): ?>
+                    <tr class="main-row">
+                        <td>
+                            <?php if ($h['status'] !== 'Đã thanh toán'): ?>
+                                <input type="checkbox" name="selected_ids[]" value="<?= $h['id'] ?>">
+                            <?php endif; ?>
+                        </td>
+                        <td><?= htmlspecialchars($h['mmyy']) ?></td>
+                        <td><?= htmlspecialchars($h['room']) ?></td>
+                        <td><?= number_format($h['tong_tien']) ?></td>
+                        <td><?= htmlspecialchars($h['status']) ?></td>
+                        <td><button class="action-btn" type="button" onclick="toggleDetail(this)">Xem chi tiết</button></td>
+                    </tr>
+                    <tr class="detail-row" style="display:none;">
+                        <td colspan="6">
+                            <div style="padding:10px 0 0 0;">
+                                <b>Điện:</b><br>
+                                <?php if (isset($h['tien_dien'])): ?>
+                                    <table>
+                                        <tr>
+                                            <th>CSC</th>
+                                            <th>CSM</th>
+                                            <th>SĐTT</th>
+                                            <th>Đơn giá</th>
+                                            <th>Thành tiền</th>
+                                        </tr>
+                                        <tr>
+                                            <td><?= htmlspecialchars($h['CSC']) ?></td>
+                                            <td><?= htmlspecialchars($h['CSM']) ?></td>
+                                            <td><?= htmlspecialchars($h['DTT']) ?></td>
+                                            <td><?= isset($h['unit_price']) &&$h['unit_price']!== null ? htmlspecialchars($h['unit_price']) : ''?></td>
+                                            <td><?= number_format($h['tien_dien']) ?>đ</td>
+                                        </tr>
+                                    </table>
+                                    <?php else: ?>Không có dữ liệu điện<br><?php endif; ?>
+
+                                <b>Nước:</b><br>
+                                <?php if (isset($h['tien_nuoc'])): ?>
+                                    <table>
+                                        <tr>
+                                            <th>CSC</th>
+                                            <th>CSM</th>
+                                            <th>SĐTT</th>
+                                            <th>Đơn giá</th>
+                                            <th>Thành tiền</th>
+                                        </tr>
+                                        <tr>
+                                            <td><?= htmlspecialchars($h['CSC_NUOC']) ?></td>
+                                            <td><?= htmlspecialchars($h['CSM_NUOC']) ?></td>
+                                            <td><?= htmlspecialchars($h['DTT_NUOC']) ?></td>
+                                            <td><?= isset($h['unit_price']) &&$h['unit_price_nuoc']!== null ? htmlspecialchars($h['unit_price']) : ''?></td>
+                                            <td><?= number_format($h['tien_nuoc']) ?>đ</td>
+                                        </tr>
+                                    </table>
+                                    <?php else: ?>Không có dữ liệu nước<br><?php endif; ?>
+
+                                <b>Phí dịch vụ:</b> <?= number_format(($h['so_nguoi'] == 2) ? 50000 : ($h['so_nguoi'] * 30000)) ?>đ<br>
+                                <b>Tiền phòng:</b> <?= number_format($h['tien_phong']) ?>đ<br>
+                                <b>Tổng hóa đơn:</b> <?= number_format($h['tong_tien']) ?>đ<br>
+                                <b>Giảm giá:</b> <?= number_format($h['discount'] ?? 0) ?>đ<br>
+                                <b>Cần thanh toán:</b> <?= number_format($h['total_discount'] ?? $h['tong_tien']) ?>đ<br>
+
+                                <div style="margin-top:10px; text-align:right;">
+                                    <?php if ($h['status'] !== 'Đã thanh toán'): ?>
+                                        <a href="index.php?controller=invoice&action=mark_paid&id=<?= $h['id'] ?>" onclick="return confirm('Xác nhận thanh toán hóa đơn này?');" class="action-btn">Thanh toán</a>
+                                    <?php endif; ?>
+                                    <a href="index.php?controller=invoice&action=invoice&id=<?= $h['id'] ?>" class="action-btn print" target="_blank">In hóa đơn</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+
+        <div style="margin-top:15px; text-align:right;">
+            <button type="submit" class="action-btn" onclick="return confirmBulk()">Thanh toán hàng loạt</button>
+        </div>
+    </form>
 </div>
 <script>
 function toggleDetail(btn) {

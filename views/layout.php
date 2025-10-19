@@ -181,92 +181,92 @@
             }
         }
 
-@media (max-width: 900px) {
-    .menu-bar-inner {
-        min-height: 60px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: relative;
-    }
+        @media (max-width: 900px) {
+            .menu-bar-inner {
+                min-height: 60px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                position: relative;
+            }
 
-    .menu-logo {
-        width: 44px;
-        margin: 8px 0;
-    }
+            .menu-logo {
+                width: 44px;
+                margin: 8px 0;
+            }
 
-    /* Gộp nút menu và user thành 1 cụm bên phải */
-    .menu-right-group {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        position: absolute;
-        right: 10px;
-        top: 8px;
-        z-index: 1100;
-    }
+            /* Gộp nút menu và user thành 1 cụm bên phải */
+            .menu-right-group {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                position: absolute;
+                right: 10px;
+                top: 8px;
+                z-index: 1100;
+            }
 
-    .menu-toggle {
-        display: inline-block;
-        background: none;
-        color: #093d62;
-        border: none;
-        font-size: 28px;
-        border-radius: 6px;
-        padding: 6px 10px;
-        cursor: pointer;
-        transition: background 0.2s;
-    }
+            .menu-toggle {
+                display: inline-block;
+                background: none;
+                color: #093d62;
+                border: none;
+                font-size: 28px;
+                border-radius: 6px;
+                padding: 6px 10px;
+                cursor: pointer;
+                transition: background 0.2s;
+            }
 
-    .menu-toggle:hover {
-        background: #f3f6fa;
-    }
+            .menu-toggle:hover {
+                background: #f3f6fa;
+            }
 
-    .menu-bar-user {
-        position: static;
-        margin: 0;
-    }
+            .menu-bar-user {
+                position: static;
+                margin: 0;
+            }
 
-    .menu-bar-links {
-        display: none;
-        flex-direction: column;
-        background: #fff;
-        position: absolute;
-        top: 60px;
-        left: 0;
-        width: 100vw;
-        box-shadow: 0 2px 8px #0002;
-        border-radius: 0 0 10px 10px;
-        z-index: 1001;
-        padding: 10px 0;
-        animation: slideDown 0.25s;
-    }
+            .menu-bar-links {
+                display: none;
+                flex-direction: column;
+                background: #fff;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                width: 100vw;
+                box-shadow: 0 2px 8px #0002;
+                border-radius: 0 0 10px 10px;
+                z-index: 1001;
+                padding: 10px 0;
+                animation: slideDown 0.25s;
+            }
 
-    .menu-bar-links.active {
-        display: flex !important;
-    }
+            .menu-bar-links.active {
+                display: flex !important;
+            }
 
-    .menu-bar-links a,
-    .menu-dropdown-content a {
-        width: 100vw;
-        padding-left: 22px !important;
-        font-size: 17px;
-        border-bottom: 1px solid #f0f0f0;
-        box-sizing: border-box;
-        text-align: left;
-    }
+            .menu-bar-links a,
+            .menu-dropdown-content a {
+                width: 100vw;
+                padding-left: 22px !important;
+                font-size: 17px;
+                border-bottom: 1px solid #f0f0f0;
+                box-sizing: border-box;
+                text-align: left;
+            }
 
-    .menu-dropdown-content {
-        position: static;
-        box-shadow: none;
-        border-radius: 0;
-        background: #f8fafc;
-    }
+            .menu-dropdown-content {
+                position: static;
+                box-shadow: none;
+                border-radius: 0;
+                background: #f8fafc;
+            }
 
-    .menu-dropdown-content a {
-        padding-left: 36px !important;
-    }
-}
+            .menu-dropdown-content a {
+                padding-left: 36px !important;
+            }
+        }
 
         @media (max-width: 600px) {
             .menu-bar-inner {
@@ -510,52 +510,52 @@
                     <!-- <a href="index.php?controller=report">Báo cáo</a> -->
                 </div>
                 <div class="menu-right-group">
-    <button class="menu-toggle" onclick="document.querySelector('.menu-bar-links').classList.toggle('active')">
-        ☰
-    </button>
-    <div class="menu-bar-user">
-        <?php if (isset($_SESSION['user'])): ?>
-            <div class="user-dropdown" style="position:relative;">
-                <span class="user-greeting">
-                    Xin chào <?= htmlspecialchars($_SESSION['user']['username']) ?> &#9662;
-                </span>
-                <div class="user-dropdown-menu" style="display:none;">
-                    <a href="#" onclick="showChangePasswordModal();return false;">Đổi mật khẩu</a>
-                    <a href="logout.php" style="color:red;">Đăng xuất</a>
+                    <button class="menu-toggle" onclick="document.querySelector('.menu-bar-links').classList.toggle('active')">
+                        ☰
+                    </button>
+                    <div class="menu-bar-user">
+                        <?php if (isset($_SESSION['user'])): ?>
+                            <div class="user-dropdown" style="position:relative;">
+                                <span class="user-greeting">
+                                    Xin chào <?= htmlspecialchars($_SESSION['user']['username']) ?> &#9662;
+                                </span>
+                                <div class="user-dropdown-menu" style="display:none;">
+                                    <!-- <a href="#" onclick="showChangePasswordModal();return false;">Đổi mật khẩu</a> -->
+                                    <a href="logout.php" style="color:red;">Đăng xuất</a>
+                                </div>
+                            </div>
+                            <script>
+                                const userGreeting = document.querySelector('.user-greeting');
+                                const userDropdownMenu = document.querySelector('.user-dropdown-menu');
+                                if (userGreeting && userDropdownMenu) {
+                                    userGreeting.addEventListener('mouseenter', function() {
+                                        userDropdownMenu.style.display = 'block';
+                                    });
+                                    userGreeting.addEventListener('mouseleave', function() {
+                                        setTimeout(() => {
+                                            if (!userDropdownMenu.matches(':hover')) userDropdownMenu.style.display = 'none';
+                                        }, 200);
+                                    });
+                                    userDropdownMenu.addEventListener('mouseleave', function() {
+                                        userDropdownMenu.style.display = 'none';
+                                    });
+                                    userDropdownMenu.addEventListener('mouseenter', function() {
+                                        userDropdownMenu.style.display = 'block';
+                                    });
+                                }
+
+                                function showChangePasswordModal() {
+                                    document.getElementById('change-password-modal').style.display = 'block';
+                                }
+
+                                function hideChangePasswordModal() {
+                                    document.getElementById('change-password-modal').style.display = 'none';
+                                }
+                            </script>
+
+                        <?php endif; ?>
+                    </div>
                 </div>
-            </div>
-                                <script>
-                            const userGreeting = document.querySelector('.user-greeting');
-                            const userDropdownMenu = document.querySelector('.user-dropdown-menu');
-                            if (userGreeting && userDropdownMenu) {
-                                userGreeting.addEventListener('mouseenter', function() {
-                                    userDropdownMenu.style.display = 'block';
-                                });
-                                userGreeting.addEventListener('mouseleave', function() {
-                                    setTimeout(() => {
-                                        if (!userDropdownMenu.matches(':hover')) userDropdownMenu.style.display = 'none';
-                                    }, 200);
-                                });
-                                userDropdownMenu.addEventListener('mouseleave', function() {
-                                    userDropdownMenu.style.display = 'none';
-                                });
-                                userDropdownMenu.addEventListener('mouseenter', function() {
-                                    userDropdownMenu.style.display = 'block';
-                                });
-                            }
-
-                            function showChangePasswordModal() {
-                                document.getElementById('change-password-modal').style.display = 'block';
-                            }
-
-                            function hideChangePasswordModal() {
-                                document.getElementById('change-password-modal').style.display = 'none';
-                            }
-                        </script>
-
-        <?php endif; ?>
-    </div>
-</div>
 
             </div>
         </nav>
@@ -564,22 +564,23 @@
         <?php if (!empty($content)) echo $content; ?>
     </div>
     <?php if (!$noHeaderFooter): ?>
-<footer class="footer">
-  <div class="footer-content">
-    <div class="footer-left">
-      <img src="../itro-logo.png" alt="TTD Motel Logo" class="footer-logo">
-      <span class="brand-name">Hệ thống quản lý nhà trọ iTrọ</span>
-    </div>
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <img src="../itro-logo.png" alt="TTD Motel Logo" class="footer-logo">
+                    <span class="brand-name">Hệ thống quản lý nhà trọ iTrọ</span>
+                </div>
 
-    <div class="footer-right">
-      <span>© 2025 Tang Tien Dung</span>
-      <span class="dot">•</span>
-      <span>Hỗ trợ: <a href="tel:0343133166">0343.133.166</a></span>
-      <span class="dot">•</span>
-      <span>Email: <a href="mailto:tiendung2004lv@gmail.com">tiendung2004lv@gmail.com</a></span>
-    </div>
-  </div>
-</footer>        </div>
+                <div class="footer-right">
+                    <span>© 2025 Tang Tien Dung</span>
+                    <span class="dot">•</span>
+                    <span>Hỗ trợ: <a href="tel:0343133166">0343.133.166</a></span>
+                    <span class="dot">•</span>
+                    <span>Email: <a href="mailto:tiendung2004lv@gmail.com">tiendung2004lv@gmail.com</a></span>
+                </div>
+            </div>
+        </footer>
+        </div>
     <?php endif; ?>
 </body>
 <script>

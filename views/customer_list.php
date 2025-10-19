@@ -2,7 +2,7 @@
 $title = 'Quản lý khách thuê';
 $headContent = '<style>
     body { font-family: Arial, sans-serif; background: #f6f8fa; }
-    .container { max-width: 1100px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px #093d6240; padding: 32px 28px; }
+    .container { max-width: 100%; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px #093d6240; padding: 32px 28px; }
     h2 { text-align: center; color: #093d62; }
     table { width: 100%; border-collapse: collapse; margin-top: 24px; }
     th, td { border: 1px solid #bfc7d1; padding: 8px 6px; text-align: left; font-size: 15px; }
@@ -90,7 +90,8 @@ if ($recordsPerPage === 'all') {
 <div class="container">
     <?php if (!empty($_SESSION['success_message'])): ?>
         <div id="success-toast" style="position:fixed;top:32px;right:32px;z-index:9999;background:#1e7e34;color:#fff;padding:14px 28px;border-radius:8px;box-shadow:0 2px 12px #093d6240;font-size:16px;animation:fadeIn 0.5s;">
-            <?= $_SESSION['success_message']; unset($_SESSION['success_message']); ?>
+            <?= $_SESSION['success_message'];
+            unset($_SESSION['success_message']); ?>
         </div>
         <script>
             setTimeout(function() {
@@ -99,7 +100,15 @@ if ($recordsPerPage === 'all') {
             }, 3500);
         </script>
         <style>
-            @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+
+                to {
+                    opacity: 1;
+                }
+            }
         </style>
     <?php endif; ?>
     <h2>Quản lý khách thuê</h2>
@@ -113,6 +122,17 @@ if ($recordsPerPage === 'all') {
                 <option value="<?= htmlspecialchars($r['room_code']) ?>" <?= $selectedRoom == $r['room_code'] ? 'selected' : '' ?>><?= htmlspecialchars($r['room_code']) ?></option>
             <?php endforeach; ?>
         </select>
+        <label for="sort">Sắp xếp theo:</label>
+        <select name="sort" id="sort" onchange="this.form.submit()">
+            <option value="room" <?= ($_GET['sort'] ?? '') == 'room' ? 'selected' : '' ?>>Phòng</option>
+            <option value="name" <?= ($_GET['sort'] ?? '') == 'name' ? 'selected' : '' ?>>Tên</option>
+        </select>
+
+        <select name="order" id="order" onchange="this.form.submit()">
+            <option value="ASC" <?= ($_GET['order'] ?? '') == 'ASC' ? 'selected' : '' ?>>Tăng dần (A–Z)</option>
+            <option value="DESC" <?= ($_GET['order'] ?? '') == 'DESC' ? 'selected' : '' ?>>Giảm dần (Z–A)</option>
+        </select>
+
         <label for="records">Hiển thị:</label>
         <select name="records" id="records" onchange="this.form.submit()">
             <option value="5" <?= $recordsPerPage == 5 ? 'selected' : '' ?>>5</option>
@@ -219,7 +239,7 @@ if ($recordsPerPage === 'all') {
                                             <input type="text" name="phone" value="<?= htmlspecialchars($c['phone']) ?>" style="width:100%;padding:6px;">
                                         </label>
                                     </div>
-                                                                        <div style="flex:1 1 140px;">
+                                    <div style="flex:1 1 140px;">
                                         <label>Loại khách:<br>
                                             <select name="type_of_tenant" style="width:100%;padding:6px;">
                                                 <option value="Chính" <?= $c['type_of_tenant'] === 'Chính' ? 'selected' : '' ?>>Chính</option>
@@ -243,7 +263,8 @@ if ($recordsPerPage === 'all') {
     <?php if ($recordsPerPage !== 'all'): ?>
         <div style="text-align:right; margin-top:20px;">
             <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <a href="?controller=customer&action=list&records=<?= $recordsPerPage ?>&page=<?= $i ?>" class="action-btn" style="<?= $i == $currentPage ? 'background:#1e7e34;' : '' ?>"><?= $i ?></a>
+                <a href="?controller=customer&action=list&records=<?= $recordsPerPage ?>&page=<?= $i ?>&sort=<?= $_GET['sort'] ?? 'room' ?>&order=<?= $_GET['order'] ?? 'ASC' ?>" class="action-btn" style="<?= $i == $currentPage ? 'background:#1e7e34;' : '' ?>"><?= $i ?></a>
+
             <?php endfor; ?>
         </div>
     <?php endif; ?>
@@ -285,7 +306,7 @@ if ($recordsPerPage === 'all') {
             </style>
         `;
         var html = '<div class="title"><b>NHÀ TRỌ CHÚ QUẢNG</b><p>Hộ gia đình: <b>Ông Tăng Tiến Quảng</b></p><p><b>Địa chỉ:</b> Đội 6, thôn Minh Thành, xã Lai Khê, TP Hải Phòng</p><p><b?>Điện thoại:</b> 0352.153.772</p> </div><h2>DANH SÁCH LƯU TRÚ</h2> <p style="text-align:center">Ngày xuất: ' + new Date().toLocaleDateString() + '</p> <table>' + thead.outerHTML + '<tbody>';
-        
+
         rows.forEach(function(row) {
             var clone = row.cloneNode(true);
             // Xóa cột "Thao tác" và "SĐT" ở mỗi dòng
@@ -298,7 +319,9 @@ if ($recordsPerPage === 'all') {
         printWindow.document.write('<html><head><title>In danh sách khách thuê</title>' + style + '</head><body>' + html + '</body></html>');
         printWindow.document.close();
         printWindow.focus();
-        setTimeout(function() { printWindow.print(); }, 300);
+        setTimeout(function() {
+            printWindow.print();
+        }, 300);
     }
 
     function showEditForm(btn, id) {
@@ -311,9 +334,13 @@ if ($recordsPerPage === 'all') {
         if (editRow) {
             editRow.style.display = '';
             // Cuộn tới form sửa
-            editRow.scrollIntoView({behavior: 'smooth', block: 'center'});
+            editRow.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            });
         }
     }
+
     function hideEditForm(id) {
         var editRow = document.getElementById('edit-row-' + id);
         if (editRow) editRow.style.display = 'none';
