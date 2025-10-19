@@ -103,13 +103,14 @@
     <table>
       <tr>
         <td rowspan="3" style="text-align: center; ">
-          <img src="<?= htmlspecialchars($h['qr_url']) ?>" alt="QR" class="qr">
+          <img src="https://img.vietqr.io/image/VCB-0341001529970-qr_only.png?amount=<?= isset($h['total_discount']) ? $h['total_discount'] : $h['tong_tien'] ?>&addInfo=<?= urlencode($h['addinfo']) ?>&accountName=BUI%20THI%20THANG" alt="QR" class="qr">
         </td>
         <td>
           Quý khách vui lòng thanh toán hóa đơn
           trong vòng 3 ngày kể từ ngày tạo hóa đơn
         </td>
       </tr>
+
       <tr>
         <td style="text-align: left;">
           Ngày tạo: <?= date('d/m/Y h:i:s', strtotime($h['created_at'])) ?>

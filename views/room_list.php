@@ -137,6 +137,7 @@ ob_start();
                         <div style="display: flex; flex-direction: row; gap: 8px;">
                             <a href="index.php?controller=customer&action=list&room=<?= urlencode($r['room_code']) ?>" class="action-btn" style="background:#093d62; color:white; text-decoration:none; border-radius: 2px; padding:5px 5px;">Khách thuê</a>
                             <a href="index.php?controller=room&action=electric_water&room=<?= urlencode($r['room_code']) ?>" class="action-btn" style="background:#093d62; color:white; text-decoration:none; border-radius: 2px; padding:5px 5px;">Điện nước</a>
+                            <a href="index.php?controller=invoice&action=list&room=<?= urlencode($r['room_code']) ?>" class="action-btn" style="background:#093d62; color:white; text-decoration:none; border-radius: 2px; padding:5px 5px;">Hóa đơn</a>
                             <!-- <a href="index.php?controller=room&action=print_tam_tru&room_code=<?= urlencode($r['room_code']) ?>" class="action-btn" style="background:#093d62; color:white; text-decoration:none; border-radius: 2px; padding:5px 5px;">In tờ khai CT01</a> -->
                         </div>
                     </td>

@@ -33,7 +33,10 @@ switch ($action) {
                 // Lấy trạng thái phòng
                 $roomInfo = null;
                 foreach (RoomModel::getAll() as $r) {
-                    if ($r['id'] == $room_id) { $roomInfo = $r; break; }
+                    if ($r['id'] == $room_id) {
+                        $roomInfo = $r;
+                        break;
+                    }
                 }
                 if (!$hasCustomer && $roomInfo && (empty($roomInfo['status']) || $roomInfo['status'] == 'Còn trống')) {
                     RoomModel::updateStatus($room, 'Đang thuê');
@@ -65,8 +68,8 @@ switch ($action) {
         if ($id) CustomerModel::traPhong($id);
         header('Location: index.php?controller=customer&action=list');
         exit;
-        case 'list_tra_phong':
-        $customers = array_filter(CustomerModel::getAll(), function($c) {
+    case 'list_tra_phong':
+        $customers = array_filter(CustomerModel::getAll(), function ($c) {
             return isset($c['status']) && $c['status'] === 'Trả phòng';
         });
         include __DIR__ . '/../views/customer_list_tra_phong.php';
@@ -115,6 +118,12 @@ switch ($action) {
         }
         // Nếu GET thì không làm gì (form sửa hiển thị ở customer_list)
     case 'list':
+        $sort = $_GET['sort'] ?? 'room';
+        $order = $_GET['order'] ?? 'ASC';
+
+        $customers = CustomerModel::getAll($sort, $order);
+        include __DIR__ . '/../views/customer_list.php';
+        break;
     default:
         $customers = CustomerModel::getAll();
         include __DIR__ . '/../views/customer_list.php';
