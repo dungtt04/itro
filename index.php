@@ -1,39 +1,54 @@
 <?php
-require_once __DIR__ . '/auth.php';
-
-// Cấu hình hiển thị lỗi (chỉ nên bật trong môi trường dev)
+require_once __DIR__ . '/portal/config/languages.php';
+// index.php - Router đơn giản
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// Lấy controller & action từ URL (mặc định là dashboard/index)
-$controller = $_GET['controller'] ?? 'dashboard';
-$action = $_GET['action'] ?? 'index';
-
-// Router cho giao diện khách hàng (không qua auth)
-if ($controller === 'customer' && in_array($action, ['portal', 'lookup', 'declare'])) {
-    require_once __DIR__ . '/controllers/CustomerController.php';
-    return;
+// Start session at the very beginning
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
 
-// Danh sách controller hợp lệ
-$controllers = [
-    'dashboard'   => 'DashboardController',
-    'customer'    => 'CustomerController',
-    'login'       => 'LoginController',
-    'register'    => 'RegisterController',
-    'room'        => 'RoomController',
-    'qr'          => 'QRController',
-    'invoice'     => 'HistoryController',  // bạn dùng 'invoice' thay cho 'history'
-    'electricity' => 'ElectricityController',
-    'water'       => 'WaterController',
-    'report'      => 'ReportController',
-    'admin'       => 'AdminController',
-    'account'     => 'AccountController',
-];
+// Set default language if not set
+if (!isset($_SESSION['lang'])) {
+    $_SESSION['lang'] = 'vi';
+}
 
-// Nếu controller không hợp lệ → về dashboard
-$controllerFile = $controllers[$controller] ?? $controllers['dashboard'];
+// Debug information
+error_log('Session ID: ' . session_id());
+error_log('Current Language: ' . ($_SESSION['lang'] ?? 'not set'));
 
-// Require file controller tương ứng
-require_once __DIR__ . '/controllers/' . $controllerFile . '.php';
+// Handle language switching
+if (isset($_GET['lang']) && in_array($_GET['lang'], ['en', 'vi'])) {
+    $_SESSION['lang'] = $_GET['lang'];
+    // Redirect back to the same page without the lang parameter
+    $redirectUrl = strtok($_SERVER['REQUEST_URI'], '?');
+    if (isset($_GET['action'])) {
+        $redirectUrl .= '?action=' . $_GET['action'];
+    }
+    header('Location: ' . $redirectUrl);
+    exit;
+}
+
+$action = $_GET['action'] ?? '';
+switch ($action) {
+    case 'customer_create':
+        require_once __DIR__ . '/portal/controllers/CustomerController.php';
+        $controller = new CustomerController();
+        $controller->create();
+        break;
+    case 'history_search':
+        require_once __DIR__ . '/portal/controllers/NhatroHistoryController.php';
+        $controller = new NhatroHistoryController();
+        $controller->search();
+        break;
+    case 'history_detail':
+        require_once __DIR__ . '/portal//controllers/NhatroHistoryController.php';
+        $controller = new NhatroHistoryController();
+        $controller->detail();
+        break;
+    default:
+        include __DIR__ . '/portal/views/home.php';
+        break;
+}

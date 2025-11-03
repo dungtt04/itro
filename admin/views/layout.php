@@ -37,7 +37,7 @@
         .menu-toggle {
             display: none;
             background: none;
-            color: #093d62;
+            color: #165a9a;
             border: none;
             font-size: 28px;
             border-radius: 6px;
@@ -61,7 +61,7 @@
 
         .menu-bar-links a,
         .menu-dropdown>a {
-            color: #093d62 !important;
+            color: #165a9a !important;
             font-weight: 500;
             text-decoration: none;
             padding: 10px 22px;
@@ -74,7 +74,7 @@
         .menu-bar-links a.active,
         .menu-bar-links a:hover,
         .menu-dropdown.open>a {
-            background: #093d62 !important;
+            background: #165a9a !important;
             color: #fff !important;
         }
 
@@ -98,14 +98,14 @@
         .menu-dropdown-content a {
             display: block;
             padding: 10px 22px;
-            color: #093d62 !important;
+            color: #165a9a !important;
             background: #fff;
             border-radius: 0;
             font-size: 16px;
         }
 
         .menu-dropdown-content a:hover {
-            background: #093d62 !important;
+            background: #165a9a !important;
             color: #fff !important;
         }
 
@@ -129,7 +129,7 @@
             background: #f3f6fa;
             border-radius: 6px;
             font-weight: 500;
-            color: #093d62;
+            color: #165a9a;
             transition: background 0.2s, color 0.2s;
             box-shadow: 0 2px 8px #093d6240;
         }
@@ -137,7 +137,7 @@
         .user-greeting:hover,
         .user-greeting:focus {
             background: #e3eafc;
-            color: #093d62;
+            color: #165a9a;
         }
 
         .user-dropdown-menu {
@@ -146,7 +146,7 @@
             right: 0;
             top: 110%;
             background: #fff;
-            box-shadow: 0 4px 24px #093d6240;
+            box-shadow: 0 4px 24px #165a9a;
             border-radius: 10px;
             min-width: 200px;
             z-index: 999;
@@ -157,7 +157,7 @@
         .user-dropdown-menu a {
             display: block;
             padding: 12px 22px;
-            color: #093d62;
+            color: #165a9a;
             text-decoration: none;
             font-size: 16px;
             border-radius: 6px;
@@ -166,7 +166,7 @@
 
         .user-dropdown-menu a:hover {
             background: #e3eafc;
-            color: #093d62;
+            color: #165a9a;
         }
 
         @keyframes fadeInUserDropdown {
@@ -209,7 +209,7 @@
             .menu-toggle {
                 display: inline-block;
                 background: none;
-                color: #093d62;
+                color: #165a9a;
                 border: none;
                 font-size: 28px;
                 border-radius: 6px;
@@ -398,7 +398,7 @@
                                 }
 
                                 .menu-dropdown2>a {
-                                    color: #093d62 !important;
+                                    color: #165a9a !important;
                                     font-weight: 500;
                                     text-decoration: none;
                                     padding: 10px 22px;
@@ -412,7 +412,7 @@
 
                                 .menu-dropdown2.open>a,
                                 .menu-dropdown2>a:hover {
-                                    background: #093d62 !important;
+                                    background: #165a9a !important;
                                     color: #fff !important;
                                 }
 
@@ -438,7 +438,7 @@
                                 .menu-dropdown2-content a {
                                     display: block;
                                     padding: 10px 22px;
-                                    color: #093d62 !important;
+                                    color: #165a9a !important;
                                     background: #fff;
                                     border-radius: 0;
                                     font-size: 16px;
@@ -448,7 +448,7 @@
                                 }
 
                                 .menu-dropdown2-content a:hover {
-                                    background: #093d62 !important;
+                                    background: #165a9a !important;
                                     color: #fff !important;
                                 }
 

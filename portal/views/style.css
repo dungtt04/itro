@@ -1,0 +1,124 @@
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f4f6fa;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 800px;
+    margin: 40px auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    padding: 32px 28px 24px 28px;
+}
+h2 {
+    color: #2a3b4c;
+    margin-bottom: 24px;
+    text-align: center;
+}
+form label {
+    display: block;
+    margin-bottom: 12px;
+    color: #34495e;
+    font-weight: 500;
+}
+input[type="text"], input[type="number"], input[type="date"], select {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 4px;
+    margin-bottom: 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 5px;
+    background: #f9fafb;
+    font-size: 15px;
+    transition: border 0.2s;
+}
+input:focus, select:focus {
+    border: 1.5px solid #007bff;
+    outline: none;
+}
+button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+button:hover {
+    background: #0056b3;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 18px;
+    background: #fff;
+}
+table th, table td {
+    border: 1px solid #e1e4e8;
+    padding: 10px 8px;
+    text-align: left;
+}
+table th {
+    background: #f0f4f8;
+    color: #2a3b4c;
+}
+a {
+    color: #007bff;
+    text-decoration: none;
+    margin-right: 12px;
+}
+a:hover {
+    text-decoration: underline;
+}
+.result-message {
+    text-align: center;
+    margin: 18px 0 10px 0;
+    font-size: 17px;
+    color: #27ae60;
+}
+.error-message {
+    text-align: center;
+    margin: 18px 0 10px 0;
+    font-size: 17px;
+    color: #e74c3c;
+}
+.home-btn {
+    display: inline-block;
+    background: #007bff;
+    color: #fff !important;
+    padding: 14px 32px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 500;
+    margin: 12px 8px;
+    box-shadow: 0 2px 8px rgba(0,123,255,0.08);
+    border: none;
+    transition: background 0.2s, box-shadow 0.2s;
+    text-decoration: none;
+}
+.home-btn:hover {
+    background: #0056b3;
+    box-shadow: 0 4px 16px rgba(0,123,255,0.15);
+    text-decoration: none;
+}
+.sub-detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 6px 0 6px 0;
+    background: #f8fafc;
+}
+.sub-detail-table th, .sub-detail-table td {
+    border: 1px solid #e1e4e8;
+    padding: 6px 8px;
+    text-align: center;
+    font-size: 15px;
+}
+.sub-detail-table th {
+    background: #eaf1fb;
+    color: #2a3b4c;
+    font-weight: 600;
+}
