@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <head>
     <meta charset="UTF-8">
-    <title>Đăng nhập quản trị</title>
+    <title>Login</title>
     <link rel="shortcut icon" href="itro-logo-vuong.png" type="image/x-icon">
     <style>
         body {
@@ -264,18 +264,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <div class="left">
         <div class="logo">
-            <img src="../itro-logo.png" alt="iTrọ">
+            <img src="itro-logo.png" alt="iTrọ">
         </div>
         <h1>HỆ THỐNG QUẢN LÝ NHÀ TRỌ</h1>
         <div class="support">
             <p>Hỗ trợ kỹ thuật: <span>0343.133.166</span></p>
-            <p>Email hỗ trợ: <span>ttiendung2004lv@gmail.com</span></p>
+            <p>Email hỗ trợ: <span>admin@dungtt.id.vn</span></p>
         </div>
+        <span style="font-size: 12px">Version 1.10</span>
     </div>
 
     <div class="right">
         <div class="inforRight">
-            <img class="imgItro" src="../itro-logo.png" alt="iTrọ" style="width: 120px; height: auto;">
+            <img class="imgItro" src="itro-logo.png" alt="iTrọ" style="width: 120px; height: auto;">
             <h3>Hệ thống quản lý nhà trọ iTrọ</h3>
         </div>
 
@@ -297,7 +298,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <hr>
         <div class="support2">
             <p>Hỗ trợ kỹ thuật: <span>0343.133.166</span></p>
-            <p>Email hỗ trợ: <span>ttiendung2004lv@gmail.com</span></p>
+            <p>Email hỗ trợ: <span>admin@dungtt.id.vn</span></p>
         </div>
     </div>
 

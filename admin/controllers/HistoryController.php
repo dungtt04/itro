@@ -27,25 +27,34 @@ switch ($action) {
         $h = null;
         if ($id) {
             global $pdo;
-            $stmt = $pdo->prepare('SELECT h.*, 
-                e.total AS tien_dien, e.CSC AS CSC, e.CSM AS CSM, e.DTT AS DTT, 
-                w.total AS tien_nuoc, w.CSC AS CSC_NUOC, w.CSM AS CSM_NUOC, w.DTT AS DTT_NUOC
+            $stmt = $pdo->prepare('SELECT h.* 
                 FROM nhatro_history h
-                LEFT JOIN electricity e ON h.electricity_id = e.id
-                LEFT JOIN water w ON h.water_id = w.id
                 WHERE h.id=?');
             $stmt->execute([$id]);
-            $h = $stmt->fetch();
-            // Đảm bảo các trường luôn tồn tại
-            foreach (['CSC', 'CSM', 'DTT', 'CSC_NUOC', 'CSM_NUOC', 'DTT_NUOC', 'tien_dien', 'tien_nuoc'] as $k) {
-                if (!isset($h[$k]) || $h[$k] === null) $h[$k] = '';
-            }
+$h = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if ($h === false) {
+    // Không tồn tại hóa đơn
+    $h = null;
+} else {
+    // Chỉ xử lý field khi CÓ hóa đơn
+    $required_fields = [
+        'e_old','e_new','e_used','e_unit_price','e_total',
+        'w_old','w_new','w_used','w_unit_price','w_total',
+        'service_fee','CSC','CSM','DTT',
+        'CSC_NUOC','CSM_NUOC','DTT_NUOC',
+        'tien_dien','tien_nuoc'
+    ];
+
+    foreach ($required_fields as $k) {
+        if (!array_key_exists($k, $h) || $h[$k] === null) {
+            $h[$k] = '';
         }
-        if ($h) {
-            include __DIR__ . '/../views/history_invoice.php';
-        } else {
-            echo 'Không tìm thấy hóa đơn!';
+    }
+}
+
         }
+        include __DIR__ . '/../views/history_invoice.php';
         break;
     case 'mark_paid_bulk':
     if (!empty($_POST['selected_ids'])) {

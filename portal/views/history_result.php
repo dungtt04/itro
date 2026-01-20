@@ -6,6 +6,8 @@ require_once __DIR__ . '/../config/languages.php';
 <html lang="<?php echo $currentLang; ?>">
 <head>
   <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
   <title><?php echo t('service_bill'); ?></title>
   <link rel="shortcut icon" href="portal/itro-logo-vuong.png" type="image/x-icon">
   <style>
@@ -15,6 +17,7 @@ require_once __DIR__ . '/../config/languages.php';
       margin: 0;
       padding: 0;
       color: #222;
+      font-size: 16px;
     }
 
     .container {
@@ -23,7 +26,7 @@ require_once __DIR__ . '/../config/languages.php';
       background: #fff;
       border-radius: 14px;
       box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
-      padding: 30px 40px;
+      padding: 20px 30px;
       position: relative;
     }
 
@@ -54,6 +57,54 @@ require_once __DIR__ . '/../config/languages.php';
       background: #fff;
     }
 
+    .qr-image {
+      width: 140px;
+      height: 140px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 8px;
+      background: #fff;
+    }
+
+    .qr-caption {
+      margin-top: 6px;
+      color: #555;
+    }
+
+    /* Full-width wrapper for paid invoices (use full container width) */
+    .invoice-full {
+      display: block;
+      width: 100%;
+    }
+
+    @media (max-width: 768px) {
+      .invoice-layout {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .qr-fixed {
+        width: 100%;
+        position: static;
+      }
+
+      .qr-fixed img {
+        width: 120px;
+        height: 120px;
+      }
+      /* Make invoice occupy full width on mobile for both paid and unpaid */
+      .invoice-left,
+      .invoice-full,
+      .invoice-card {
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .invoice-layout {
+        align-items: stretch;
+      }
+    }
+
     .header {
       text-align: center;
       margin-bottom: 35px;
@@ -70,16 +121,16 @@ require_once __DIR__ . '/../config/languages.php';
 
     .header p {
       margin: 2px 0;
-      font-size: 15px;
+      font-size: 14px;
       color: #333;
     }
 
     .invoice-card {
-      border: 1px solid #dce3f0;
+      /* border: 1px solid #dce3f0; */
       border-radius: 10px;
-      margin-bottom: 35px;
-      padding: 25px;
-      background: #fafbff;
+      /* margin-bottom: ; */
+      /* padding: 25px; */
+      background: #ffffffff;
     }
 
     .section-title {
@@ -99,9 +150,9 @@ require_once __DIR__ . '/../config/languages.php';
 
     .info-item {
       background: #fff;
-      border: 1px solid #e0e4ec;
+      /* border: 1px solid #e0e4ec; */
       border-radius: 8px;
-      padding: 8px 12px;
+      padding: 8px 0px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -114,7 +165,7 @@ require_once __DIR__ . '/../config/languages.php';
 
     .info-value {
       color: #0d47a1;
-      font-weight: 600;
+      /* font-weight: 600; */
     }
 
     .sub-table {
@@ -122,6 +173,7 @@ require_once __DIR__ . '/../config/languages.php';
       border-collapse: collapse;
       background: #fff;
       border-radius: 8px;
+      font-size: 14px;
       overflow: hidden;
     }
 
@@ -254,7 +306,7 @@ require_once __DIR__ . '/../config/languages.php';
       <p><?php echo t('motel_address'); ?></p>
       <p><?php echo t('motel_phone'); ?></p>
     </div>
-    <h2 style="text-align:center;"><?php echo t('service_bill'); ?></h2>
+    <h2 style="text-align:center; font-size: 20px"><?php echo t('service_bill'); ?></h2>
 
     <?php if (!empty($results)): ?>
       <?php foreach ($results as $row): ?>
@@ -277,19 +329,26 @@ require_once __DIR__ . '/../config/languages.php';
         ?>
 
         <?php 
-        $paid_status = t('status_paid'); // Add translation for payment status
-        if ($row['status'] !== $paid_status): ?>
-          <div class="invoice-layout">
-            <div class="invoice-left">
-        <?php endif; ?>
+        // Use translated paid status consistently
+        $paid_status = t('Đã thanh toán'); // Add translation for payment status
+        // $has_qr = !empty($row['qr_url']);
+
+        // If unpaid and has QR, render two-column layout (invoice left, QR right) on desktop.
+        // If paid or no QR, center the invoice.
+        if ($row['status'] !== $paid_status) {
+          echo '<div class="invoice-layout"><div class="invoice-left">';
+        } else {
+          echo '<div class="invoice-full">';
+        }
+        ?>
 
         <div class="invoice-card">
           <div class="section-title"><?php echo t('general_info'); ?></div>
           <div class="info-grid">
             <div class="info-item"><span class="info-label"><?php echo t('room'); ?></span><span class="info-value"><?= $room ?></span></div>
             <div class="info-item"><span class="info-label"><?php echo t('month'); ?></span><span class="info-value"><?= $month ?>/<?= $year ?></span></div>
-            <div class="info-item"><span class="info-label"><?php echo t('room_fee'); ?></span><span class="info-value"><?= number_format($row['tien_phong']) ?> đ</span></div>
-            <div class="info-item"><span class="info-label"><?php echo t('service_fee'); ?></span><span class="info-value"><?= number_format($phi_dv) ?> đ</span></div>
+            <!-- <div class="info-item"><span class="info-label"><?php echo t('room_fee'); ?></span><span class="info-value"><?= number_format($row['tien_phong']) ?> đ</span></div> -->
+            <!-- <div class="info-item"><span class="info-label"><?php echo t('service_fee'); ?></span><span class="info-value"><?= number_format($phi_dv) ?> đ</span></div> -->
           </div>
 
           <div class="section-title"><?php echo t('electricity_details'); ?></div>
@@ -303,11 +362,11 @@ require_once __DIR__ . '/../config/languages.php';
                 <th><?php echo t('total_amount'); ?></th>
               </tr>
               <tr>
-                <td><?= sprintf("%06d", (int)$electric['CSC']) ?></td>
-                <td><?= sprintf("%06d", (int)$electric['CSM']) ?></td>
-                <td><?= htmlspecialchars($electric['DTT']) ?></td>
-                <td><?= number_format($electric['unit_price']) ?></td>
-                <td class="highlight"><?= number_format($electric['total']) ?> đ</td>
+                <td><?= sprintf("%06d", (int)$row['e_old']) ?></td>
+                <td><?= sprintf("%06d", (int)$row['e_new']) ?></td>
+                <td><?= htmlspecialchars($row['e_used']) ?></td>
+                <td><?= number_format($row['e_unit_price']) ?></td>
+                <td class="highlight"><?= number_format($row['e_total']) ?> đ</td>
               </tr>
             </table>
           <?php endif; ?>
@@ -323,17 +382,20 @@ require_once __DIR__ . '/../config/languages.php';
                 <th><?php echo t('total_amount'); ?></th>
               </tr>
               <tr>
-                <td><?= sprintf("%06d", (int)$water['CSC']) ?></td>
-                <td><?= sprintf("%06d", (int)$water['CSM']) ?></td>
-                <td><?= htmlspecialchars($water['DTT']) ?></td>
-                <td><?= number_format($water['unit_price']) ?></td>
-                <td class="highlight"><?= number_format($water['total']) ?> đ</td>
+                <td><?= sprintf("%06d", (int)$row['w_old']) ?></td>
+                <td><?= sprintf("%06d", (int)$row['w_new']) ?></td>
+                <td><?= htmlspecialchars($row['w_total']) ?></td>
+                <td><?= number_format($row['w_unit_price']) ?></td>
+                <td class="highlight"><?= number_format($row['w_total']) ?> đ</td>
               </tr>
             </table>
           <?php endif; ?>
 
           <div class="section-title"><?php echo t('summary'); ?></div>
           <div class="total-section">
+            <div><span><?php echo t('room_fee'); ?>: </span> <span><?= number_format($row['tien_phong'])  ?> đ</span></div>
+            <div><span><?php echo t('service_fee'); ?>: </span> <span><?= number_format($row['service_fee']) ?> đ</span></div>
+
             <div><span><?php echo t('total_amount'); ?>:</span><span><?= number_format($row['tong_tien']) ?> đ</span></div>
             <div><span><?php echo t('discount'); ?>:</span><span>- <?= number_format($row['discount']) ?> đ</span></div>
             <div class="total-pay"><span><?php echo t('amount_to_pay'); ?>:</span><span><?= number_format($row['total_discount']) ?> đ</span></div>
@@ -344,16 +406,23 @@ require_once __DIR__ . '/../config/languages.php';
           <?php endif; ?>
         </div>
 
-        <?php if ($row['status'] !== 'Đã thanh toán'): ?>
-            </div>
-            <?php if (!empty($row['qr_url'])): ?>
-              <div class="qr-fixed">
-                <img src="<?= htmlspecialchars($row['qr_url']) ?>" alt="QR Payment">
-                <div style="margin-top:6px;color:#555;"><?php echo t('scan_to_pay'); ?></div>
-              </div>
-            <?php endif; ?>
-          </div>
-        <?php endif; ?>
+        <?php
+        // Close wrappers and render QR on the right (desktop) / below (mobile) when unpaid
+        if ($row['status'] !== $paid_status) {
+          // close invoice-left
+          echo '</div>';
+          // render QR block (class .qr-fixed will be right on desktop, static below on mobile)
+          echo '<div class="qr-fixed">';
+          echo '<img src="https://img.vietqr.io/image/VCB-0341001529970-qr_only.png?amount='. $row['total_discount'] .' &addInfo='.($row['addinfo']).'&accountName=BUI%20THI%20THANG" alt="QR Payment" class="qr-image">';
+          echo '<div class="qr-caption">' . t('scan_to_pay') . '</div>';
+          echo '</div>';
+          // close invoice-layout
+          echo '</div>';
+        } else {
+          // close invoice-full wrapper
+          echo '</div>';
+        }
+        ?>
 
       <?php endforeach; ?>
     <?php else: ?>

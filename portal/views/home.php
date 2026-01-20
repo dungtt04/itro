@@ -27,10 +27,7 @@ require_once __DIR__ . '/../config/languages.php';
       text-align: center;
     }
 
-    img {
-      width: 100px;
-      margin-bottom: 15px;
-    }
+
 
     h2 {
       color: #0a3d91;
@@ -81,13 +78,15 @@ require_once __DIR__ . '/../config/languages.php';
 <body>
 	<?php include 'portal/views/partials/header.php'; ?>
   <div class="container">
-    <img src="/portal/itro-logo.png" alt="iTrọ Logo">
+    <img src="/portal/itro-logo.png" width="100px" alt="iTrọ Logo">
     <h2><?php echo t('welcome_title'); ?></h2>
     <a href="?action=history_search" class="home-btn"><?php echo t('start_button'); ?></a>
-
-    <a href="https://drive.google.com/file/d/1SFMiDqcMl4odW-J52ofDDeZMyF7I9Arm/view?usp=sharing" target="_blank" class="guide-link">
+    <a href="?action=privacy_policy" class="guide-link"><?php echo t('privacy_policy'); ?></a> 
+    
+    <!-- <a href="https://drive.google.com/file/d/1SFMiDqcMl4odW-J52ofDDeZMyF7I9Arm/view?usp=sharing" target="_blank" class="guide-link">
       <?php echo t('user_guide'); ?>
-    </a>
+    </a> -->
+    
   </div>
 <?php include 'portal/views/partials/footer.php'; ?>
 

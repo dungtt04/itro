@@ -111,6 +111,29 @@ if ($recordsPerPage === 'all') {
             }
         </style>
     <?php endif; ?>
+    <?php if (!empty($_SESSION['error_message'])): ?>
+        <div id="success-toast" style="position:fixed;top:32px;right:32px;z-index:9999;background:#1e7e34;color:#fff;padding:14px 28px;border-radius:8px;box-shadow:0 2px 12px #093d6240;font-size:16px;animation:fadeIn 0.5s;">
+            <?= $_SESSION['error_message'];
+            unset($_SESSION['error_message']); ?>
+        </div>
+        <script>
+            setTimeout(function() {
+                var toast = document.getElementById('success-toast');
+                if (toast) toast.style.display = 'none';
+            }, 3500);
+        </script>
+        <style>
+            @keyframes fadeIn {
+                from {
+                    opacity: 0;
+                }
+
+                to {
+                    opacity: 1;
+                }
+            }
+        </style>
+    <?php endif; ?>
     <h2>Quản lý khách thuê</h2>
     <form method="get" class="filter-form">
         <input type="hidden" name="controller" value="customer">
@@ -145,10 +168,14 @@ if ($recordsPerPage === 'all') {
     <a href="index.php?controller=customer&action=add" class="add-btn">+ Khai báo khách mới</a>
     <a href="index.php?controller=customer&action=list_tra_phong" class="add-btn">Khách trả phòng</a>
     <a href="#" onclick="printCustomerList();return false;" class="add-btn" style="background:#1e7e34;">In danh sách</a>
+    <form id="bulkForm" method="post" action="index.php?controller=customer&action=print_ct01_bulk" style="display:inline;">
+        <button type="submit" class="add-btn" style="background:#093d62;">In CT01</button>
+    </form>
 
     <table>
         <thead>
             <tr>
+                <th><input type="checkbox" id="selectAll"></th>
                 <th>Phòng</th>
                 <th>Họ tên</th>
                 <th>Ngày sinh</th>
@@ -164,6 +191,7 @@ if ($recordsPerPage === 'all') {
                 <?php if (!$selectedRoom || $c['room'] == $selectedRoom): ?>
                     <?php if (isset($c['status']) && $c['status'] === 'Trả phòng') continue; ?>
                     <tr class="main-row">
+                        <td style="text-align: center;" data-label="Chọn"><input type="checkbox" name="ids[]" value="<?= $c['id'] ?>" form="bulkForm"></td>
                         <td style="text-align: center;" data-label="Phòng"><?= htmlspecialchars($c['room']) ?></td>
                         <td data-label="Họ tên"><?= htmlspecialchars($c['name']) ?></td>
                         <td style="text-align: center;" data-label="Ngày sinh">
@@ -187,6 +215,7 @@ if ($recordsPerPage === 'all') {
                             <div style="padding:10px 0 0 0;">
                                 <b>Ngày cấp:</b> <?= htmlspecialchars($cccd_date) ?><br>
                                 <b>Nơi cấp:</b> <?= htmlspecialchars($c['cccd_place']) ?><br>
+                                <b>Đồng ý chia sẻ dữ liệu:</b> <?php if ($c['policy_status'] === 'accept') echo "Đồng ý"; else echo "Chưa đồng ý"; ?><br>
                                 <b>Thường trú:</b> <?= htmlspecialchars($c['address']) ?><br>
                                 <b>SĐT:</b> <?= htmlspecialchars($c['phone']) ?><br>
                                 <div class="acton" style="margin-top:10px; text-align:right; margin-right: 20px; margin-bottom: 10px;">
@@ -195,6 +224,7 @@ if ($recordsPerPage === 'all') {
                                         <!-- <a href="index.php?controller=customer&action=edit&id<?= $c['id'] ?>" class="action-btn" style="background:#1e7e34; color:white; text-decoration:none; margin:5px 5px; border-radius: 2px; padding:5px 5px;">Sửa</a> -->
                                         <a href="index.php?controller=customer&action=contract&id=<?= $c['id'] ?>" target="_blank" class="action-btn" style="background:#093d62; color:white; text-decoration:none; margin:5px 5px; border-radius: 2px; padding:5px 5px;">In hợp đồng</a>
                                     <?php endif; ?>
+                                    <a href="index.php?controller=customer&action=print_ct01&id=<?= $c['id'] ?>" target="_blank" class="action-btn" style="background:#093d62; color:white; text-decoration:none; margin:5px 5px; border-radius: 2px; padding:5px 5px;">In CT01</a>
                                 </div>
                             </div>
                         </td>
@@ -345,6 +375,24 @@ if ($recordsPerPage === 'all') {
         var editRow = document.getElementById('edit-row-' + id);
         if (editRow) editRow.style.display = 'none';
     }
+
+    // Select all checkboxes
+    document.getElementById('selectAll').addEventListener('change', function() {
+        var checkboxes = document.querySelectorAll('input[name="ids[]"]');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = this.checked;
+        }, this);
+    });
+
+    // Validate bulk form submission
+    document.getElementById('bulkForm').addEventListener('submit', function(e) {
+        var checkboxes = document.querySelectorAll('input[name="ids[]"]:checked');
+        if (checkboxes.length === 0) {
+            alert('Vui lòng chọn khách thuê cần in');
+            e.preventDefault();
+            return false;
+        }
+    });
 </script>
 <?php
 $content = ob_get_clean();
