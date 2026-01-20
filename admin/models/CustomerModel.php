@@ -16,10 +16,11 @@ public static function getAll($sort = 'room', $order = 'ASC') {
 }
     public static function add($data) {
         global $pdo;
-        $stmt = $pdo->prepare("INSERT INTO customer (room, name, cccd, dob, cccd_date, cccd_place, address, phone, room_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        return $stmt->execute([
-            $data['room'], $data['name'], $data['cccd'], $data['dob'], $data['cccd_date'], $data['cccd_place'], $data['address'], $data['phone'], $data['room_id']
+        $stmt = $pdo->prepare("INSERT INTO customer (room, name, cccd, dob, cccd_date, cccd_place, address, phone, type_of_tenant, room_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $result = $stmt->execute([
+            $data['room'], $data['name'], $data['cccd'], $data['dob'], $data['cccd_date'], $data['cccd_place'], $data['address'], $data['phone'], $data['type_of_tenant'] ?? 'chính', $data['room_id']
         ]);
+        return $result ? $pdo->lastInsertId() : false;
     }
     // Trả phòng: cập nhật trạng thái, không xóa khỏi DB
     public static function traPhong($id) {
@@ -27,6 +28,14 @@ public static function getAll($sort = 'room', $order = 'ASC') {
         $stmt = $pdo->prepare("UPDATE customer SET status='Trả phòng' WHERE id=?");
         return $stmt->execute([$id]);
     }
+
+    // Cập nhật trạng thái thành Đang thuê
+    public static function updateStatusDangThue($id) {
+        global $pdo;
+        $stmt = $pdo->prepare("UPDATE customer SET status='Đang thuê' WHERE id=?");
+        return $stmt->execute([$id]);
+    }
+
     public static function delete($id) {
         global $pdo;
         $stmt = $pdo->prepare("DELETE FROM customer WHERE id=?");
@@ -84,6 +93,12 @@ public static function getAll($sort = 'room', $order = 'ASC') {
         $stmt = $db->prepare("SELECT * FROM customer WHERE room = :room_code");
         $stmt->execute(['room_code' => $room_code]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public static function getActiveByRoom($room_code) {
+        global $pdo;
+        $stmt = $pdo->prepare("SELECT * FROM customer WHERE room = ? AND (status IS NULL OR status != 'Trả phòng')");
+        $stmt->execute([$room_code]);
+        return $stmt->fetchAll();
     }
     public static function getDB() {
         // Ví dụ dùng biến toàn cục $db hoặc tự tạo kết nối mới

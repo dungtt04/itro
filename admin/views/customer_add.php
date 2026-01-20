@@ -16,12 +16,13 @@ ob_start();
     <a href="index.php?controller=customer&action=list" class="back-link">&larr; Quay lại danh sách khách thuê</a>
     <h2>Khai báo khách mới</h2>
     <?php if (!empty($error)): ?><div class="error"><?= $error ?></div><?php endif; ?>
+    <?php $prefillRoom = $_GET['room'] ?? ''; ?>
     <form method="post" action="index.php?controller=customer&action=add">
         <label>Phòng số</label>
         <select name="room" required>
             <option value="">-- Chọn phòng --</option>
             <?php foreach($roomList as $r): ?>
-                <option value="<?= htmlspecialchars($r['room_code']) ?>"><?= htmlspecialchars($r['room_code']) ?></option>
+                <option value="<?= htmlspecialchars($r['room_code']) ?>" <?= $prefillRoom && $prefillRoom == $r['room_code'] ? 'selected' : '' ?>><?= htmlspecialchars($r['room_code']) ?></option>
             <?php endforeach; ?>
         </select>
         <label>Họ tên</label>

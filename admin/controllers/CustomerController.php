@@ -117,6 +117,36 @@ switch ($action) {
             exit;
         }
         // Nếu GET thì không làm gì (form sửa hiển thị ở customer_list)
+    case 'print_ct01':
+        $id = $_GET['id'] ?? null;
+        if ($id) {
+            $customer = CustomerModel::getById($id);
+            if ($customer) {
+                $active_customers = [$customer];
+                include __DIR__ . '/../views/print_tam_tru.php';
+            } else {
+                echo "Khách thuê không tồn tại.";
+            }
+        } else {
+            echo "Thiếu ID khách thuê.";
+        }
+        break;
+    case 'print_ct01_bulk':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $ids = $_POST['ids'] ?? [];
+            $all_ct01 = [];
+            foreach ($ids as $id) {
+                $customer = CustomerModel::getById($id);
+                if ($customer) {
+                    $all_ct01[] = [$customer];
+                }
+            }
+            include __DIR__ . '/../views/print_tam_tru.php';
+        } else {
+            header('Location: index.php?controller=customer&action=list');
+            exit;
+        }
+        break;
     case 'list':
         $sort = $_GET['sort'] ?? 'room';
         $order = $_GET['order'] ?? 'ASC';

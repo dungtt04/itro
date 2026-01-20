@@ -374,16 +374,116 @@
                 <a class="menu-logo" href="index.php?controller=dashboard">
                     <img src="itro-logo.png" class="menu-logo" alt="Logo" />
                 </a>
-                <button class="menu-toggle" onclick="document.querySelector('.menu-bar-links').classList.toggle('active')">☰
-                </button>
+                <!-- <button class="menu-toggle" onclick="document.querySelector('.menu-bar-links').classList.toggle('active')">☰
+                </button> -->
                 <div class="menu-bar-links">
                     <a href="index.php?controller=dashboard">Dashboard</a>
                     <div class="menu-dropdown">
+                        <style>
+                            .menu-dropdown2 {
+                                position: relative;
+                                display: inline-block;
+                            }
+
+                            .menu-dropdown2>a {
+                                color: #165a9a !important;
+                                font-weight: 500;
+                                text-decoration: none;
+                                padding: 10px 22px;
+                                font-size: 17px;
+                                border-radius: 6px;
+                                transition: background 0.2s, color 0.2s;
+                                display: inline-block;
+                                background: none;
+                                white-space: nowrap;
+                            }
+
+                            .menu-dropdown2.open>a,
+                            .menu-dropdown2>a:hover {
+                                background: #165a9a !important;
+                                color: #fff !important;
+                            }
+
+                            .menu-dropdown2-content {
+                                display: none;
+                                position: absolute;
+                                left: 100%;
+                                top: 0;
+                                background: #fff;
+                                min-width: 180px;
+                                box-shadow: 0 2px 8px #0002;
+                                border-radius: 8px;
+                                z-index: 20;
+                                margin-top: 0;
+                                margin-left: 2px;
+                            }
+
+                            .menu-dropdown2.open .menu-dropdown2-content,
+                            .menu-dropdown2:hover .menu-dropdown2-content {
+                                display: block;
+                            }
+
+                            .menu-dropdown2-content a {
+                                display: block;
+                                padding: 10px 22px;
+                                color: #165a9a !important;
+                                background: #fff;
+                                border-radius: 0;
+                                font-size: 16px;
+                                text-align: left;
+                                transition: background 0.2s, color 0.2s;
+                                white-space: nowrap;
+                            }
+
+                            .menu-dropdown2-content a:hover {
+                                background: #165a9a !important;
+                                color: #fff !important;
+                            }
+
+                            @media (max-width: 900px) {
+                                .menu-dropdown2 {
+                                    width: 100%;
+                                }
+
+                                .menu-dropdown2-content {
+                                    position: static;
+                                    min-width: unset;
+                                    box-shadow: none;
+                                    border-radius: 0;
+                                    background: #f8fafc;
+                                    margin: 0;
+                                    padding: 0;
+                                }
+
+                                .menu-dropdown2-content a {
+                                    padding-left: 36px !important;
+                                    background: #f8fafc;
+                                    width: 100vw;
+                                    box-sizing: border-box;
+                                    border-bottom: 1px solid #f0f0f0;
+                                }
+
+                                .menu-dropdown2>a {
+                                    width: 100vw;
+                                    box-sizing: border-box;
+                                    border-bottom: 1px solid #f0f0f0;
+                                }
+                            }
+                        </style>
+
                         <a href="#" onclick="event.preventDefault();this.parentNode.classList.toggle('open');return false;">Dịch vụ phòng</a>
                         <div class="menu-dropdown-content">
                             <a href="index.php?controller=room">Phòng ở</a>
-                            <a href="index.php?controller=customer">Khách thuê</a>
+                            <!-- <a href="index.php?controller=customer">Khách thuê</a> -->
 
+                            <div class="menu-dropdown2">
+                                <a href="#" onclick="event.preventDefault();this.parentNode.classList.toggle('open');return false;">Khách thuê</a>
+                                <div class="menu-dropdown2-content">
+                                    <a href="index.php?controller=customer">Đang thuê</a>
+                                    <a href="index.php?controller=customer&action=list_tra_phong">Trả phòng</a>
+                                </div>
+                            </div>
+                            <a href="index.php?controller=deposit">Đặt cọc</a>
                             <div class="menu-dropdown2">
                                 <a href="#" onclick="event.preventDefault();this.parentNode.classList.toggle('open');return false;">Dịch vụ</a>
                                 <div class="menu-dropdown2-content">
@@ -391,110 +491,12 @@
                                     <a href="index.php?controller=water">Nước</a>
                                 </div>
                             </div>
-                            <style>
-                                .menu-dropdown2 {
-                                    position: relative;
-                                    display: inline-block;
-                                }
-
-                                .menu-dropdown2>a {
-                                    color: #165a9a !important;
-                                    font-weight: 500;
-                                    text-decoration: none;
-                                    padding: 10px 22px;
-                                    font-size: 17px;
-                                    border-radius: 6px;
-                                    transition: background 0.2s, color 0.2s;
-                                    display: inline-block;
-                                    background: none;
-                                    white-space: nowrap;
-                                }
-
-                                .menu-dropdown2.open>a,
-                                .menu-dropdown2>a:hover {
-                                    background: #165a9a !important;
-                                    color: #fff !important;
-                                }
-
-                                .menu-dropdown2-content {
-                                    display: none;
-                                    position: absolute;
-                                    left: 100%;
-                                    top: 0;
-                                    background: #fff;
-                                    min-width: 180px;
-                                    box-shadow: 0 2px 8px #0002;
-                                    border-radius: 8px;
-                                    z-index: 20;
-                                    margin-top: 0;
-                                    margin-left: 2px;
-                                }
-
-                                .menu-dropdown2.open .menu-dropdown2-content,
-                                .menu-dropdown2:hover .menu-dropdown2-content {
-                                    display: block;
-                                }
-
-                                .menu-dropdown2-content a {
-                                    display: block;
-                                    padding: 10px 22px;
-                                    color: #165a9a !important;
-                                    background: #fff;
-                                    border-radius: 0;
-                                    font-size: 16px;
-                                    text-align: left;
-                                    transition: background 0.2s, color 0.2s;
-                                    white-space: nowrap;
-                                }
-
-                                .menu-dropdown2-content a:hover {
-                                    background: #165a9a !important;
-                                    color: #fff !important;
-                                }
-
-                                @media (max-width: 900px) {
-                                    .menu-dropdown2 {
-                                        width: 100%;
-                                    }
-
-                                    .menu-dropdown2-content {
-                                        position: static;
-                                        min-width: unset;
-                                        box-shadow: none;
-                                        border-radius: 0;
-                                        background: #f8fafc;
-                                        margin: 0;
-                                        padding: 0;
-                                    }
-
-                                    .menu-dropdown2-content a {
-                                        padding-left: 36px !important;
-                                        background: #f8fafc;
-                                        width: 100vw;
-                                        box-sizing: border-box;
-                                        border-bottom: 1px solid #f0f0f0;
-                                    }
-
-                                    .menu-dropdown2>a {
-                                        width: 100vw;
-                                        box-sizing: border-box;
-                                        border-bottom: 1px solid #f0f0f0;
-                                    }
-                                }
-                            </style>
                         </div>
 
                     </div>
 
-                    <!-- <a href="index.php?controller=room">Phòng</a>
-                    <a href="index.php?controller=customer">Khách thuê</a>
-                    <div class="menu-dropdown">
-                        <a href="#" onclick="event.preventDefault();this.parentNode.classList.toggle('open');return false;">Dịch vụ</a>
-                        <div class="menu-dropdown-content">
-                            <a href="index.php?controller=electricity">Điện</a>
-                            <a href="index.php?controller=water">Nước</a>
-                        </div>
-                    </div> -->
+
+
                     <a href="index.php?controller=invoice">Hóa đơn</a>
                     <?php if (isset($_SESSION['user']) && $_SESSION['user']['role'] === 'general_admin'): ?>
                         <div class="menu-dropdown">
@@ -567,7 +569,7 @@
         <footer class="footer">
             <div class="footer-content">
                 <div class="footer-left">
-                    <img src="../itro-logo.png" alt="TTD Motel Logo" class="footer-logo">
+                    <img src="itro-logo.png" alt="TTD Motel Logo" class="footer-logo">
                     <span class="brand-name">Hệ thống quản lý nhà trọ iTrọ</span>
                 </div>
 

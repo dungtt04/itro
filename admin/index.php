@@ -9,7 +9,15 @@ error_reporting(E_ALL);
 // Lấy controller & action từ URL (mặc định là dashboard/index)
 $controller = $_GET['controller'] ?? 'dashboard';
 $action = $_GET['action'] ?? 'index';
+// // Parse URL để lấy controller & action
+// $url = $_SERVER['REQUEST_URI'];
+// $url = str_replace('/itro/admin/', '', $url); // Adjust base path if necessary
+// $url = trim($url, '/');
+// $parts = explode('/', $url);
 
+// // Mặc định controller và action
+// $controller = $parts[0] ?? 'dashboard';
+// $action = $parts[1] ?? 'index';
 // Router cho giao diện khách hàng (không qua auth)
 if ($controller === 'customer' && in_array($action, ['portal', 'lookup', 'declare'])) {
     require_once __DIR__ . '/controllers/CustomerController.php';
@@ -27,8 +35,9 @@ $controllers = [
     'invoice'     => 'HistoryController',  // bạn dùng 'invoice' thay cho 'history'
     'electricity' => 'ElectricityController',
     'water'       => 'WaterController',
+    'deposit'     => 'DepositController',
     'report'      => 'ReportController',
-    'admin'       => 'AdminController',
+    // 'admin'       => 'AdminController',
     'account'     => 'AccountController',
 ];
 

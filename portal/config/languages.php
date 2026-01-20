@@ -18,6 +18,7 @@ $translations = [
         'start_button' => 'Bắt đầu',
         'user_guide' => 'Hướng dẫn sử dụng',
         'select_language' => 'Chọn ngôn ngữ',
+        'privacy_policy' => 'Chính sách bảo vệ dữ liệu cá nhân',
         // History Form
         'bill_lookup' => 'Tra cứu hóa đơn',
         'enter_info' => 'Nhập thông tin để xem chi tiết hóa đơn phòng trọ',
@@ -80,6 +81,7 @@ $translations = [
         'start_button' => 'Start',
         'user_guide' => 'User Guide',
         'select_language' => 'Select Language',
+        'privacy_policy' => 'Privacy Policy',
         // History Form
         'bill_lookup' => 'Bill Lookup',
         'enter_info' => 'Enter information to view room service bill details',

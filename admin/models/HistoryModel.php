@@ -15,9 +15,9 @@ class HistoryModel
             LEFT JOIN room r ON h.room_id = r.id
             ORDER BY h.id DESC";
         $rows = $pdo->query($sql)->fetchAll();
-        // Đảm bảo các trường CSC, CSM, DTT luôn tồn tại (dù null)
+        // Ensure fields always exist (even if null)
         foreach ($rows as &$row) {
-            foreach (['CSC', 'CSM', 'DTT', 'CSC_NUOC', 'CSM_NUOC', 'DTT_NUOC'] as $k) {
+            foreach (['CSC', 'CSM', 'DTT', 'CSC_NUOC', 'CSM_NUOC', 'DTT_NUOC', 'e_old', 'e_new', 'e_used', 'e_unit_price', 'e_total', 'w_old', 'w_new', 'w_used', 'w_unit_price', 'w_total'] as $k) {
                 if (!array_key_exists($k, $row) || $row[$k] === null) $row[$k] = '';
             }
         }
@@ -59,9 +59,9 @@ class HistoryModel
         $stmt->execute($params);
         $rows = $stmt->fetchAll();
 
-        // Bổ sung giá trị rỗng nếu null
+        // Ensure fields always exist (even if null)
         foreach ($rows as &$row) {
-            foreach (['CSC', 'CSM', 'DTT', 'CSC_NUOC', 'CSM_NUOC', 'DTT_NUOC'] as $k) {
+            foreach (['CSC', 'CSM', 'DTT', 'CSC_NUOC', 'CSM_NUOC', 'DTT_NUOC', 'e_old', 'e_new', 'e_used', 'e_unit_price', 'e_total', 'w_old', 'w_new', 'w_used', 'w_unit_price', 'w_total'] as $k) {
                 if (!array_key_exists($k, $row) || $row[$k] === null) $row[$k] = '';
             }
         }
