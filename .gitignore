@@ -3,3 +3,6 @@
 DEPOSIT_MANAGEMENT_GUIDE.md
 QUICKSTART.md
 SETUP_GUIDE.md
+/portal/config/database.php
+/portal/config/mail.php
+/admin/db.php
