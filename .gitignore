@@ -3,6 +3,8 @@
 DEPOSIT_MANAGEMENT_GUIDE.md
 QUICKSTART.md
 SETUP_GUIDE.md
+REVENUE_FEATURE_CHECK.md
+REVENUE_STATISTICS.md
 /portal/config/database.php
 /portal/config/mail.php
 /admin/db.php

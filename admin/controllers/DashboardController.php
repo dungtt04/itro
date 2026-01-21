@@ -4,6 +4,7 @@ require_once __DIR__ . '/../models/ElectricityModel.php';
 require_once __DIR__ . '/../models/WaterModel.php';
 require_once __DIR__ . '/../models/CustomerModel.php';
 require_once __DIR__ . '/../models/QRModel.php';
+require_once __DIR__ . '/../models/HistoryModel.php';
 require_once __DIR__ . '/../room_helper.php';
 
 $year = $_GET['year'] ?? date('Y');
@@ -53,6 +54,10 @@ if (isset($_GET['stat_year_only'])) {
 $monthKey = $statYear.'-'.str_pad($statMonth, 2, '0', STR_PAD_LEFT);
 $electricityList = ElectricityModel::getListByMonth($monthKey);
 $waterList = WaterModel::getListByMonth($monthKey);
+
+// Get revenue statistics using HistoryModel
+$monthlyRevenueStats = HistoryModel::getMonthlyStats($statMonth, $statYear);
+$monthlyRevenueByRoom = HistoryModel::getMonthlyRevenueByRoom($statMonth, $statYear);
 
 // Get invoices for selected month - now using new schema
 $invoices = $pdo->prepare("SELECT * FROM nhatro_history WHERE mmyy=?");
@@ -135,6 +140,11 @@ for ($y = $startYear; $y <= $endYear; $y++) {
 $invoicesYear = $pdo->prepare("SELECT * FROM nhatro_history WHERE mmyy LIKE ?");
 $invoicesYear->execute(['_'.$statYearOnly]);
 $invoicesYear = $invoicesYear->fetchAll();
+
+// Get yearly revenue statistics using HistoryModel
+$yearlyRevenueStats = HistoryModel::getYearlyStats($statYearOnly);
+$monthlyRevenueInYear = HistoryModel::getMonthlyRevenueByYear($statYearOnly);
+$yearlyAllRevenueStats = HistoryModel::getYearlyRevenueAll();
 
 $tongThuNam = 0;
 $thuDienNam = 0;

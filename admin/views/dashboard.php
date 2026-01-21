@@ -420,7 +420,103 @@ $headContent = '
   .dashboard ::-webkit-scrollbar-thumb:hover {
     background: #64748b;
   }
-</style>
+  /* Tables trong info-grid */
+  .info-grid table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+  }
+
+  .info-grid th {
+    background: linear-gradient(135deg, #093d62 0%, #0f5a8f 100%);
+    color: white;
+    padding: 14px 12px;
+    font-weight: 600;
+    text-align: left;
+    font-size: 0.95rem;
+    letter-spacing: 0.5px;
+    border: none;
+  }
+
+  .info-grid td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 0.9rem;
+    color: #334155;
+    transition: background-color 0.2s ease;
+  }
+
+  .info-grid tr:hover td {
+    background-color: #f0f7ff;
+  }
+
+  .info-grid tr:last-child td {
+    border-bottom: none;
+  }
+
+  .info-grid tr td:first-child {
+    font-weight: 500;
+    color: #1e293b;
+  }
+
+  /* Empty state */
+  .info-grid tr td[colspan] {
+    text-align: center;
+    color: #94a3b8;
+    font-style: italic;
+    padding: 24px 12px;
+  }
+
+  /* Amount column */
+  .info-grid tr td:nth-child(3) {
+    font-weight: 600;
+    color: #2e7d32;
+  }
+
+  /* Action button */
+  .dashboard-btn {
+    display: inline-block;
+    background: linear-gradient(to right, #059669, #10b981);
+    color: white;
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .dashboard-btn:hover {
+    background: linear-gradient(to right, #047857, #059669);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(5, 150, 105, 0.3);
+  }
+
+  .dashboard-btn:active {
+    transform: translateY(0);
+  }
+
+  .dashboard-btn::before {
+    content: "✓ ";
+    margin-right: 4px;
+  }
+
+  /* Responsive tables */
+  @media(max-width: 768px) {
+    .info-grid th,
+    .info-grid td {
+      padding: 10px 8px;
+      font-size: 0.85rem;
+    }
+
+    .dashboard-btn {
+      padding: 6px 10px;
+      font-size: 0.8rem;
+    }
+  }</style>
 ';
 ob_start();
 ?>
@@ -490,7 +586,119 @@ ob_start();
           <canvas id="waterChart" height="200"></canvas>
         </div>
       </div>
-              <!-- Biểu đồ doanh thu
+              <!-- Biểu đồ doanh thu -->
+      <div class="dashboard-topbar" style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>THỐNG KÊ DOANH THU</h1>
+        <a href="index.php?controller=revenue&action=monthly" style="text-decoration: none;">
+          <button style="background: #093d62; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: 500;">
+            Xem chi tiết →
+          </button>
+        </a>
+      </div>
+
+      <!-- Thống kê doanh thu theo tháng -->
+      <div class="dashboard-stats-grid">
+        <div class="dashboard-stat-card">
+          <small>Doanh thu tháng (Sau chiết khấu)</small>
+          <strong style="color: #2e7d32;"><?= isset($monthlyRevenueStats['total_revenue']) ? number_format((int)$monthlyRevenueStats['total_revenue']) : '-' ?> đ</strong>
+        </div>
+        <div class="dashboard-stat-card">
+          <small>Doanh thu tháng (Trước chiết khấu)</small>
+          <strong><?= isset($monthlyRevenueStats['gross_revenue']) ? number_format((int)$monthlyRevenueStats['gross_revenue']) : '-' ?> đ</strong>
+        </div>
+        <div class="dashboard-stat-card">
+          <small>Tiền phòng</small>
+          <strong><?= isset($monthlyRevenueStats['room_revenue']) ? number_format((int)$monthlyRevenueStats['room_revenue']) : '-' ?> đ</strong>
+        </div>
+        <div class="dashboard-stat-card">
+          <small>Tiền điện</small>
+          <strong><?= isset($monthlyRevenueStats['electricity_revenue']) ? number_format((int)$monthlyRevenueStats['electricity_revenue']) : '-' ?> đ</strong>
+        </div>
+        <div class="dashboard-stat-card">
+          <small>Tiền nước</small>
+          <strong style="color: #1e7e34;"><?= isset($monthlyRevenueStats['water_revenue']) ? number_format((int)$monthlyRevenueStats['water_revenue']) : '-' ?> đ</strong>
+        </div>
+        <div class="dashboard-stat-card">
+          <small>Phí dịch vụ</small>
+          <strong><?= isset($monthlyRevenueStats['service_revenue']) ? number_format((int)$monthlyRevenueStats['service_revenue']) : '-' ?> đ</strong>
+        </div>
+      </div>
+
+      <!-- Thống kê doanh thu theo năm -->
+      <div style="background: #f8fafc; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border: 1px solid #e2e8f0;">
+        <h3 style="margin-top: 0; color: #093d62;">📅 Thống kê doanh thu năm <?= $statYearOnly ?></h3>
+        <div class="dashboard-stats-grid">
+          <div class="dashboard-stat-card">
+            <small>Tổng doanh thu năm (Sau chiết khấu)</small>
+            <strong style="color: #2e7d32; font-size: 1.25rem;"><?= isset($yearlyRevenueStats['total_revenue']) ? number_format((int)$yearlyRevenueStats['total_revenue']) : '-' ?> đ</strong>
+          </div>
+          <div class="dashboard-stat-card">
+            <small>Tổng doanh thu năm (Trước chiết khấu)</small>
+            <strong><?= isset($yearlyRevenueStats['gross_revenue']) ? number_format((int)$yearlyRevenueStats['gross_revenue']) : '-' ?> đ</strong>
+          </div>
+          <div class="dashboard-stat-card">
+            <small>Tiền phòng (Cả năm)</small>
+            <strong><?= isset($yearlyRevenueStats['room_revenue']) ? number_format((int)$yearlyRevenueStats['room_revenue']) : '-' ?> đ</strong>
+          </div>
+          <div class="dashboard-stat-card">
+            <small>Tiền điện (Cả năm)</small>
+            <strong><?= isset($yearlyRevenueStats['electricity_revenue']) ? number_format((int)$yearlyRevenueStats['electricity_revenue']) : '-' ?> đ</strong>
+          </div>
+          <div class="dashboard-stat-card">
+            <small>Tiền nước (Cả năm)</small>
+            <strong style="color: #1e7e34;"><?= isset($yearlyRevenueStats['water_revenue']) ? number_format((int)$yearlyRevenueStats['water_revenue']) : '-' ?> đ</strong>
+          </div>
+          <div class="dashboard-stat-card">
+            <small>Phí dịch vụ (Cả năm)</small>
+            <strong><?= isset($yearlyRevenueStats['service_revenue']) ? number_format((int)$yearlyRevenueStats['service_revenue']) : '-' ?> đ</strong>
+          </div>
+        </div>
+      </div>
+          <div class="dashboard-stat-card">
+            <small>Phí dịch vụ (Cả năm)</small>
+            <strong><?= isset($yearlyRevenueStats['service_revenue']) ? number_format((int)$yearlyRevenueStats['service_revenue']) : '-' ?> đ</strong>
+          </div>
+          <div class="dashboard-stat-card">
+            <small>Tổng hóa đơn (Cả năm)</small>
+            <strong><?= isset($yearlyRevenueStats['invoice_count']) ? (int)$yearlyRevenueStats['invoice_count'] : '-' ?></strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Doanh thu theo phòng -->
+      <?php if (!empty($monthlyRevenueByRoom)): ?>
+      <div style="background: #fff; padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; border: 1px solid #e2e8f0;">
+        <h3 style="margin-top: 0; color: #093d62;">🏘️ Doanh thu theo phòng - Tháng <?= str_pad($statMonth, 2, '0', STR_PAD_LEFT) ?>/<?= $statYear ?></h3>
+        <div style="overflow-x: auto;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+            <thead>
+              <tr style="background: #f1f5f9; border-bottom: 2px solid #e2e8f0;">
+                <th style="padding: 10px; text-align: left; font-weight: 600;">Phòng</th>
+                <th style="padding: 10px; text-align: right; font-weight: 600;">Tiền phòng</th>
+                <th style="padding: 10px; text-align: right; font-weight: 600;">Tiền điện</th>
+                <th style="padding: 10px; text-align: right; font-weight: 600;">Tiền nước</th>
+                <th style="padding: 10px; text-align: right; font-weight: 600;">Phí dịch vụ</th>
+                <th style="padding: 10px; text-align: right; font-weight: 600;">Tổng</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php foreach ($monthlyRevenueByRoom as $room): ?>
+              <tr style="border-bottom: 1px solid #e2e8f0; background-color: #f8fafc;">
+                <td style="padding: 10px; font-weight: 500;"><?= htmlspecialchars($room['room']) ?></td>
+                <td style="padding: 10px; text-align: right;"><?= number_format((int)($room['room_revenue'] ?? 0)) ?> đ</td>
+                <td style="padding: 10px; text-align: right;"><?= number_format((int)($room['electricity_revenue'] ?? 0)) ?> đ</td>
+                <td style="padding: 10px; text-align: right;"><?= number_format((int)($room['water_revenue'] ?? 0)) ?> đ</td>
+                <td style="padding: 10px; text-align: right;"><?= number_format((int)($room['service_revenue'] ?? 0)) ?> đ</td>
+                <td style="padding: 10px; text-align: right; font-weight: 600; color: #2e7d32;"><?= number_format((int)($room['total_revenue'] ?? 0)) ?> đ</td>
+              </tr>
+              <?php endforeach; ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <?php endif; ?>
+
+      <!-- Biểu đồ doanh thu
         <div style="margin-top:2rem;">
           <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr)); gap:1.5rem;">
             <div class="dashboard-chart-section" style="margin-bottom:0;">
