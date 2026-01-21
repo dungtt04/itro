@@ -37,6 +37,7 @@ $controllers = [
     'water'       => 'WaterController',
     'deposit'     => 'DepositController',
     'report'      => 'ReportController',
+    'revenue'     => 'RevenueController',
     // 'admin'       => 'AdminController',
     'account'     => 'AccountController',
 ];
