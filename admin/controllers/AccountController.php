@@ -74,7 +74,7 @@ switch ($action) {
         if ($error) echo '<script>alert("' . addslashes($error) . '");</script>';
         if ($success) echo '<script>alert("' . addslashes($success) . '");window.location.href="index.php";</script>';
         $users = UserModel::getAll();
-        include __DIR__ . '/../views/account_list.php';
+        include __DIR__ . '/../views/account/account_list.php';
         break;
     case 'approve':
         $id = $_GET['id'] ?? 0;
@@ -122,6 +122,6 @@ switch ($action) {
     case 'index':
     default:
         $users = UserModel::getAll();
-        include __DIR__ . '/../views/account_list.php';
+        include __DIR__ . '/../views/account/account_list.php';
         break;
 }

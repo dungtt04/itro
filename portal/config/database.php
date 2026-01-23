@@ -1,7 +1,7 @@
 <?php
 // config/database.php
 $host = 'localhost';
-$db   = 'generateqr';
+$db   = 'itro_test';
 $user = 'root';
 $pass = '';
 $charset = 'utf8mb4';

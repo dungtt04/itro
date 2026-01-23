@@ -43,7 +43,7 @@ switch ($action) {
                 }
             }
         }
-        include __DIR__ . '/../views/room_add.php';
+        include __DIR__ . '/../views/room/room_add.php';
         break;
     case 'electric_water':
     require_once __DIR__ . '/../models/ElectricityModel.php';
@@ -60,19 +60,19 @@ switch ($action) {
         $electricity = ElectricityModel::getAll();
         $water = WaterModel::getAll();
     }
-    include __DIR__ . '/../views/room_electric_water.php';
+    include __DIR__ . '/../views/room/room_electric_water.php';
     break;
         case 'add_electric_water':
-        include __DIR__ . '/../views/electric_water_add.php';
+        include __DIR__ . '/../views/utility/electric_water_add.php';
         break;
     case 'add_electric_water':
-        include __DIR__ . '/../views/electric_water_add.php';
+        include __DIR__ . '/../views/utility/electric_water_add.php';
         break;
 
     case 'list':
     default:
         $rooms = RoomModel::getAll();
-        include __DIR__ . '/../views/room_list.php';
+        include __DIR__ . '/../views/room/room_list.php';
         break;
     case 'vacate':
         // Trả phòng theo mã phòng: cập nhật tất cả khách thuê của phòng đó sang 'Trả phòng' và đặt trạng thái phòng là Còn trống
@@ -109,6 +109,6 @@ switch ($action) {
         } else {
             $active_customers = [];
         }
-        include __DIR__ . '/../views/print_tam_tru.php';
+        include __DIR__ . '/../views/print/print_tam_tru.php';
         break;
 }

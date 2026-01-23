@@ -17,7 +17,7 @@ switch ($action) {
         $monthlyStats = HistoryModel::getMonthlyStats($month, $year);
         $monthlyRevenueByRoom = HistoryModel::getMonthlyRevenueByRoom($month, $year);
         
-        include __DIR__ . '/../views/revenue_monthly.php';
+        include __DIR__ . '/../views/revenue/revenue_monthly.php';
         break;
         
     case 'yearly':
@@ -26,21 +26,21 @@ switch ($action) {
         $monthlyRevenueInYear = HistoryModel::getMonthlyRevenueByYear($year);
         $yearlyAllStats = HistoryModel::getYearlyRevenueAll();
         
-        include __DIR__ . '/../views/revenue_yearly.php';
+        include __DIR__ . '/../views/revenue/revenue_yearly.php';
         break;
         
     case 'comparison':
         // So sánh doanh thu qua các năm
         $yearlyAllStats = HistoryModel::getYearlyRevenueAll();
         
-        include __DIR__ . '/../views/revenue_comparison.php';
+        include __DIR__ . '/../views/revenue/revenue_comparison.php';
         break;
         
     default:
         $monthlyStats = HistoryModel::getMonthlyStats($month, $year);
         $monthlyRevenueByRoom = HistoryModel::getMonthlyRevenueByRoom($month, $year);
         
-        include __DIR__ . '/../views/revenue_monthly.php';
+        include __DIR__ . '/../views/revenue/revenue_monthly.php';
         break;
 }
 ?>

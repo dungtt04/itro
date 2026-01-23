@@ -62,7 +62,7 @@ switch ($action) {
                 $msg = 'Vui lòng nhập đủ thông tin!';
             }
         }
-        include __DIR__ . '/../views/water_add.php';
+        include __DIR__ . '/../views/water/water_add.php';
         break;
     case 'edit':
         $id = (int)($_GET['id'] ?? 0);
@@ -90,7 +90,7 @@ switch ($action) {
             $msg = 'Đã cập nhật!';
             $w = WaterModel::getById($id);
         }
-        include __DIR__ . '/../views/water_edit.php';
+        include __DIR__ . '/../views/water/water_edit.php';
         break;
     case 'delete':
         $id = (int)($_GET['id'] ?? 0);
@@ -100,6 +100,6 @@ switch ($action) {
     case 'list':
     default:
         $list = WaterModel::getAll();
-        include __DIR__ . '/../views/water_list.php';
+        include __DIR__ . '/../views/water/water_list.php';
         break;
 }

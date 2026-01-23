@@ -54,7 +54,7 @@ if ($h === false) {
 }
 
         }
-        include __DIR__ . '/../views/history_invoice.php';
+        include __DIR__ . '/../views/history/history_invoice.php';
         break;
     case 'mark_paid_bulk':
     if (!empty($_POST['selected_ids'])) {
@@ -80,7 +80,7 @@ default:
     // Lấy danh sách hóa đơn có lọc
     $history = HistoryModel::filter($room, $month, $status);
 
-    include __DIR__ . '/../views/history_list.php';
+    include __DIR__ . '/../views/history/history_list.php';
     break;
     // default:
     //     $history = HistoryModel::getAll();
