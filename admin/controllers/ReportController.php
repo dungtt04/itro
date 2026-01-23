@@ -11,7 +11,7 @@ class ReportController {
 
     public function index() {
         $reports = $this->model->getAllReports();
-        include __DIR__ . '/../views/report_list.php';
+        include __DIR__ . '/../views/report/report_list.php';
     }
 
     public function process() {

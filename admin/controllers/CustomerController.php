@@ -61,7 +61,7 @@ switch ($action) {
             }
         }
         $roomList = getRoomList($pdo);
-        include __DIR__ . '/../views/customer_add.php';
+        include __DIR__ . '/../views/customer/customer_add.php';
         break;
     case 'tra_phong':
         $id = (int)($_GET['id'] ?? 0);
@@ -72,14 +72,14 @@ switch ($action) {
         $customers = array_filter(CustomerModel::getAll(), function ($c) {
             return isset($c['status']) && $c['status'] === 'Trả phòng';
         });
-        include __DIR__ . '/../views/customer_list_tra_phong.php';
+        include __DIR__ . '/../views/customer/customer_list_tra_phong.php';
         break;
     case 'contract':
         $id = (int)($_GET['id'] ?? 0);
         if ($id) {
             $customer = CustomerModel::getById($id);
             if ($customer) {
-                include __DIR__ . '/../views/customer_contract.php';
+                include __DIR__ . '/../views/customer/customer_contract.php';
                 exit;
             }
         }
@@ -123,7 +123,7 @@ switch ($action) {
             $customer = CustomerModel::getById($id);
             if ($customer) {
                 $active_customers = [$customer];
-                include __DIR__ . '/../views/print_tam_tru.php';
+                include __DIR__ . '/../views/print/print_tam_tru.php';
             } else {
                 echo "Khách thuê không tồn tại.";
             }
@@ -141,7 +141,7 @@ switch ($action) {
                     $all_ct01[] = [$customer];
                 }
             }
-            include __DIR__ . '/../views/print_tam_tru.php';
+            include __DIR__ . '/../views/print/print_tam_tru.php';
         } else {
             header('Location: index.php?controller=customer&action=list');
             exit;
@@ -152,10 +152,10 @@ switch ($action) {
         $order = $_GET['order'] ?? 'ASC';
 
         $customers = CustomerModel::getAll($sort, $order);
-        include __DIR__ . '/../views/customer_list.php';
+        include __DIR__ . '/../views/customer/customer_list.php';
         break;
     default:
         $customers = CustomerModel::getAll();
-        include __DIR__ . '/../views/customer_list.php';
+        include __DIR__ . '/../views/customer/customer_list.php';
         break;
 }

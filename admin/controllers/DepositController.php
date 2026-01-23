@@ -12,7 +12,7 @@ $action = $_GET['action'] ?? 'list';
 switch ($action) {
     case 'list':
         $deposits = DepositModel::getAll('room_id', 'ASC');
-        include __DIR__ . '/../views/deposit_list.php';
+        include __DIR__ . '/../views/deposit/deposit_list.php';
         break;
 
     case 'add':
@@ -103,7 +103,7 @@ switch ($action) {
         // Lấy danh sách khách hàng
         $customers = CustomerModel::getAll();
 
-        include __DIR__ . '/../views/deposit_add.php';
+        include __DIR__ . '/../views/deposit/deposit_add.php';
         break;
 
     case 'payment':
@@ -188,7 +188,7 @@ switch ($action) {
             header('Location: index.php?controller=deposit&action=list');
             exit;
         }
-        include __DIR__ . '/../views/deposit_refund.php';
+        include __DIR__ . '/../views/deposit/deposit_refund.php';
         break;
 
     case 'delete':

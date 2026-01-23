@@ -1,7 +1,10 @@
 <?php
+// Khởi tạo Error Handler
+// require_once __DIR__ . '/ErrorHandler.php';
+
 require_once __DIR__ . '/auth.php';
 
-// Cấu hình hiển thị lỗi (chỉ nên bật trong môi trường dev)
+// Cấu hình hiển thị lỗi - để ErrorHandler quản lý
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
@@ -38,6 +41,8 @@ $controllers = [
     'deposit'     => 'DepositController',
     'report'      => 'ReportController',
     'revenue'     => 'RevenueController',
+    // 'error'       => 'ErrorController',
+    // 'test'        => 'TestController',  // Test suite - xóa trước khi production
     // 'admin'       => 'AdminController',
     'account'     => 'AccountController',
 ];
@@ -47,3 +52,20 @@ $controllerFile = $controllers[$controller] ?? $controllers['dashboard'];
 
 // Require file controller tương ứng
 require_once __DIR__ . '/controllers/' . $controllerFile . '.php';
+
+// Instantiate controller và gọi method
+$controllerInstance = new $controllerFile();
+
+// Gọi method action
+if (method_exists($controllerInstance, $action)) {
+    $controllerInstance->$action();
+} else {
+    // Nếu method không tồn tại, gọi action mặc định (index)
+    if (method_exists($controllerInstance, 'index')) {
+        $controllerInstance->index();
+    } else {
+        // Lỗi: không tìm thấy method
+        http_response_code(404);
+        echo 'Error: Method ' . htmlspecialchars($action) . ' not found in ' . htmlspecialchars($controllerFile);
+    }
+}

@@ -6,7 +6,7 @@ $action = $_GET['action'] ?? 'portal';
 switch ($action) {
     case 'portal':
         ob_start();
-        include __DIR__ . '/../views/customer_portal.php';
+        include __DIR__ . '/../views/customer/customer_portal.php';
         $content = ob_get_clean();
         $title = 'Cổng khách hàng';
         include __DIR__ . '/../views/layout.php';
@@ -20,7 +20,7 @@ switch ($action) {
             $invoices = CustomerPortalModel::findInvoices($room, $month, $year);
         }
         ob_start();
-        include __DIR__ . '/../views/customer_invoice_lookup.php';
+        include __DIR__ . '/../views/customer/customer_invoice_lookup.php';
         $content = ob_get_clean();
         $title = 'Tra cứu hóa đơn';
         include __DIR__ . '/../views/layout.php';
@@ -40,14 +40,14 @@ switch ($action) {
             }
         }
         ob_start();
-        include __DIR__ . '/../views/customer_declare.php';
+        include __DIR__ . '/../views/customer/customer_declare.php';
         $content = ob_get_clean();
         $title = 'Khai báo thông tin khách hàng';
         include __DIR__ . '/../views/layout.php';
         break;
     default:
         ob_start();
-        include __DIR__ . '/../views/customer_portal.php';
+        include __DIR__ . '/../views/customer/customer_portal.php';
         $content = ob_get_clean();
         $title = 'Cổng khách hàng';
         include __DIR__ . '/../views/layout.php';

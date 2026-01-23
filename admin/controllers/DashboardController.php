@@ -226,4 +226,4 @@ try {
     $totalCustomersCount = 0;
 }
 
-include __DIR__ . '/../views/dashboard.php';
+include __DIR__ . '/../views/dashboard/dashboard.php';

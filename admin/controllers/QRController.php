@@ -147,4 +147,4 @@ if (isset($_GET['action']) && $_GET['action'] === 'ajax_list') {
     exit;
 }
 
-include __DIR__ . '/../views/qr_create.php';
+include __DIR__ . '/../views/qr/qr_create.php';

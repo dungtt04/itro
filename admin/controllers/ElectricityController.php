@@ -47,7 +47,7 @@ switch ($action) {
                 $msg = 'Vui lòng nhập đủ thông tin!';
             }
         }
-        include __DIR__ . '/../views/electricity_add.php';
+        include __DIR__ . '/../views/electricity/electricity_add.php';
         break;
     case 'edit':
         $id = (int)($_GET['id'] ?? 0);
@@ -75,7 +75,7 @@ switch ($action) {
             $msg = 'Đã cập nhật!';
             $e = ElectricityModel::getById($id);
         }
-        include __DIR__ . '/../views/electricity_edit.php';
+        include __DIR__ . '/../views/electricity/electricity_edit.php';
         break;
     case 'delete':
         $id = (int)($_GET['id'] ?? 0);
@@ -85,6 +85,6 @@ switch ($action) {
     case 'list':
     default:
         $list = ElectricityModel::getAll();
-        include __DIR__ . '/../views/electricity_list.php';
+        include __DIR__ . '/../views/electricity/electricity_list.php';
         break;
 }
